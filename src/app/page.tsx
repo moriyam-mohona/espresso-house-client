@@ -40,7 +40,7 @@ export default function LandingPage() {
       {/* Main Container */}
       <main className="flex-1 pb-16 md:pb-12">
         {/* Section 1: Loyalty/Rewards Banner matching Screenshot 1 */}
-        <RewardsBanner onCollectPointsClick={handleOpenMyId} />
+        <RewardsBanner />
 
         {/* Section 2: Expresso Fun (Fika Fun) Challenges matching Screenshot 1 */}
         <ExpressoFun />

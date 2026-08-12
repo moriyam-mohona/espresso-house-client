@@ -3,7 +3,13 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { QrcodeOutlined, UserOutlined, EnvironmentOutlined } from "@ant-design/icons";
+import {
+  QrcodeOutlined,
+  UserOutlined,
+  EnvironmentOutlined,
+  WalletOutlined,
+  ShoppingOutlined,
+} from "@ant-design/icons";
 import { Badge, Dropdown, MenuProps } from "antd";
 import { siteConfig } from "@/config/site";
 import { ROUTES } from "@/constants/routes";
@@ -73,16 +79,29 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
             {/* Store selector shortcut */}
             <div className="flex items-center gap-2 bg-primary/80 px-3 py-1.5 rounded-full text-xs text-emerald-100 hover:bg-primary transition-colors cursor-pointer">
               <EnvironmentOutlined className="text-emerald-300" />
-              <span>Central Station Branch • Open until 10:00 PM</span>
+              <span>Central Station Club • Open until 10:00 PM</span>
             </div>
           </div>
 
           <div className="flex items-center gap-6">
-            <nav className="flex items-center gap-6 text-sm font-medium text-white!">
-              <a href="#offers" className="text-white! hover:text-white transition-colors">Offers</a>
-              <a href="#fika-fun" className="text-white! hover:text-white transition-colors">Fika Fun</a>
-              <a href="#menu" className="text-white! hover:text-white transition-colors">Menu</a>
-              <a href="#stores" className="text-white! hover:text-white transition-colors">Stores</a>
+            <nav className="flex items-center gap-5 text-sm font-semibold text-white">
+              <Link
+                href={ROUTES.MY_ID}
+                className="flex items-center gap-1.5 text-white/90! hover:text-white! transition-colors py-1 group"
+              >
+                <WalletOutlined className="text-base text-amber-300 group-hover:scale-110 transition-transform" />
+                <span>Wallet</span>
+              </Link>
+
+              <div className="h-4 w-px bg-emerald-700/60" />
+
+              <a
+                href="#offers"
+                className="flex items-center gap-1.5 text-white/90! hover:text-white! transition-colors py-1 group"
+              >
+                <ShoppingOutlined className="text-base text-emerald-300 group-hover:scale-110 transition-transform" />
+                <span>Order</span>
+              </a>
             </nav>
 
             <div className="h-5 w-px bg-emerald-700/60" />
@@ -97,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
               </Link>
 
               <Dropdown menu={{ items: profileMenuItems }} placement="bottomRight" trigger={['click']}>
-                <button className="flex items-center gap-2 bg-primary!  text-white! px-3.5 py-1.5 rounded-full text-xs font-medium hover:bg-[#39695d] transition-all">
+         <button className="flex items-center gap-2 bg-primary-hover hover:bg-[#39695d] px-3.5 py-1.5 rounded-full text-xs font-medium text-white transition-all">
                   <UserOutlined className="text-emerald-300" />
                   <span>My Profile</span>
                 </button>
@@ -109,3 +128,4 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
     </header>
   );
 };
+

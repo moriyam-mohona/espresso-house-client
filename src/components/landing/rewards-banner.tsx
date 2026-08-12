@@ -8,7 +8,7 @@ import { ROUTES } from "@/constants/routes";
 
 export const RewardsBanner: React.FC = () => {
   return (
-    <div className="mx-4 md:mx-auto md:max-w-5xl my-4">
+    <div className="mx-4 md:mx-auto md:max-w-7xl my-4">
       <Link href={ROUTES.REWARDS} className="block">
         <div className="bg-brand-sage hover:bg-[#e1ebd9] transition-all duration-200 rounded-2xl p-5 sm:p-6 flex items-center justify-between shadow-xs border border-[#d6e3d3] cursor-pointer group">
           <div className="space-y-1.5">

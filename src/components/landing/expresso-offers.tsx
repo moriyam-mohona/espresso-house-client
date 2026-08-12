@@ -166,7 +166,7 @@ export const ExpressoOffers: React.FC = () => {
   };
 
   return (
-    <div id="offers" className="mx-4 md:mx-auto md:max-w-5xl my-8">
+    <div id="offers" className="mx-4 md:mx-auto md:max-w-7xl my-8">
       {/* Section Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl sm:text-2xl font-extrabold text-[#16302b] tracking-tight">

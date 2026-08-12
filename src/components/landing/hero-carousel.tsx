@@ -53,7 +53,7 @@ export const HeroCarousel: React.FC<{ onTryHereClick?: () => void }> = ({ onTryH
   const slide = slides[currentSlide];
 
   return (
-    <div className="mx-4 md:mx-auto md:max-w-5xl my-6">
+    <div className="mx-4 md:mx-auto md:max-w-7xl my-6">
       <div className="relative overflow-hidden rounded-3xl h-95 sm:h-110 shadow-lg group">
         {/* Slide Image Background */}
         <Image

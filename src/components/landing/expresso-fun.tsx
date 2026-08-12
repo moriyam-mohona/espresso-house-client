@@ -57,7 +57,7 @@ export const ExpressoFun: React.FC = () => {
   };
 
   return (
-    <div id="fika-fun" className="mx-4 md:mx-auto md:max-w-5xl my-6">
+    <div id="fika-fun" className="mx-4 md:mx-auto md:max-w-7xl my-6">
       <div className="bg-brand-sage rounded-2xl p-5 sm:p-6 border border-[#d6e3d3] shadow-xs relative">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-4">
@@ -111,7 +111,7 @@ export const ExpressoFun: React.FC = () => {
               <div
                 key={challenge.id}
                 onClick={() => setSelectedChallenge(challenge)}
-                className="snap-start shrink-0 w-[82vw] sm:w-85 md:w-90 bg-brand-cream hover:bg-white transition-all duration-200 rounded-2xl border-2 border-[#1e3932] shadow-xs cursor-pointer group relative overflow-hidden flex flex-col justify-between p-4 sm:p-5"
+                className="snap-start shrink-0 w-[82vw] sm:w-85 md:w-106! bg-brand-cream hover:bg-white transition-all duration-200 rounded-2xl border-2 border-[#1e3932] shadow-xs cursor-pointer group relative overflow-hidden flex flex-col justify-between p-4 sm:p-5"
               >
                 {/* Top-Left Tag & Top-Right Points */}
                 <div className="flex items-start justify-between w-full mb-3">

@@ -6,7 +6,7 @@ import { EnvironmentOutlined, ShoppingCartOutlined, WifiOutlined, CoffeeOutlined
 
 export const StoreSpotlight: React.FC<{ onPreOrderClick?: () => void }> = ({ onPreOrderClick }) => {
   return (
-    <div id="stores" className="mx-4 md:mx-auto md:max-w-5xl my-10">
+    <div id="stores" className="mx-4 md:mx-auto md:max-w-7xl my-10">
       <div className="bg-white rounded-3xl overflow-hidden border border-gray-200/90 shadow-md grid grid-cols-1 md:grid-cols-2">
         {/* Left Image Section featuring coffee-shop.jpg */}
         <div className="relative h-64 md:h-full min-h-75">

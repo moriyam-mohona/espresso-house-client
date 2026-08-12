@@ -10,6 +10,7 @@ export const ROUTES = {
   MY_ID: "/my-id",
   WALLET: "/wallet",
   PAYMENT_CARDS: "/wallet/payment-cards",
+  SEND_GIFT: "/wallet/send-gift",
   // Authentication route placeholders
   AUTH: {
     LOGIN: "/login",

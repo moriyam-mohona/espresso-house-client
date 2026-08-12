@@ -24,8 +24,8 @@ export const WalletActionList: React.FC = () => {
   return (
     <div className="space-y-3">
       {/* 1. Send a Gift Banner matching Screenshot 1 & 2 */}
-      <div
-        onClick={() => handleAction("Gift Options")}
+      <Link
+        href={ROUTES.SEND_GIFT}
         className="bg-[#dce6d8] hover:bg-[#d3e0cf] rounded-2xl p-4 flex items-center justify-between border border-[#c8d8c2] cursor-pointer transition-all shadow-2xs group"
       >
         <div className="flex items-center gap-4">
@@ -42,7 +42,7 @@ export const WalletActionList: React.FC = () => {
           </div>
         </div>
         <RightOutlined className="text-xs text-gray-600 group-hover:translate-x-0.5 transition-transform" />
-      </div>
+      </Link>
 
       {/* 2. Fika Offers Card matching Screenshot 2 */}
       <Link

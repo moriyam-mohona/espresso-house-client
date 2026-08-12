@@ -98,7 +98,7 @@ export const MemberIdCard: React.FC<MemberIdCardProps> = ({
           <div className="mt-6">
             <button
               onClick={() => setShowInfoModal(false)}
-              className="w-full bg-[#1e3932] hover:bg-[#2d5349] text-white py-3 rounded-full font-bold text-sm transition-all"
+              className="w-full bg-[#1e3932] hover:bg-primary text-white py-3 rounded-full font-bold text-sm transition-all"
             >
               Close
             </button>

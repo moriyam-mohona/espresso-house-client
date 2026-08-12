@@ -36,7 +36,7 @@ export const FikaPointsBanner: React.FC<FikaPointsBannerProps> = ({
         <div className="pt-3">
           <Link
             href={ROUTES.REWARDS}
-            className="inline-block bg-[#1e3932] hover:bg-[#2d5349] text-white px-6 py-2 rounded-full text-xs font-bold transition-all shadow-2xs active:scale-95"
+            className="inline-block bg-[#1e3932] hover:bg-primary text-white px-6 py-2 rounded-full text-xs font-bold transition-all shadow-2xs active:scale-95"
           >
             Fika House
           </Link>

@@ -47,10 +47,10 @@ export const WalletActionList: React.FC = () => {
       {/* 2. Fika Offers Card matching Screenshot 2 */}
       <Link
         href={ROUTES.HOME + "#offers"}
-        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group block"
+        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group"
       >
         <div className="flex items-center gap-4">
-          <div className="h-11 w-11 rounded-full bg-[#e8efe6] text-[#1e3932] flex items-center justify-center text-lg">
+          <div className="h-11 w-11 rounded-full bg-brand-sage text-[#1e3932] flex items-center justify-center text-lg">
             <TagOutlined />
           </div>
           <div>
@@ -68,10 +68,10 @@ export const WalletActionList: React.FC = () => {
       {/* 3. Payment Cards matching Screenshot 2 */}
       <Link
         href={ROUTES.PAYMENT_CARDS}
-        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group block"
+        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group"
       >
         <div className="flex items-center gap-4">
-          <div className="h-11 w-11 rounded-full bg-[#e8efe6] text-[#1e3932] flex items-center justify-center text-lg">
+          <div className="h-11 w-11 rounded-full bg-brand-sage text-[#1e3932] flex items-center justify-center text-lg">
             <CreditCardOutlined />
           </div>
           <div>
@@ -92,7 +92,7 @@ export const WalletActionList: React.FC = () => {
         className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group"
       >
         <div className="flex items-center gap-4">
-          <div className="h-11 w-11 rounded-full bg-[#e8efe6] text-[#1e3932] flex items-center justify-center text-lg">
+          <div className="h-11 w-11 rounded-full bg-brand-sage text-[#1e3932] flex items-center justify-center text-lg">
             <FileTextOutlined />
           </div>
           <h4 className="text-sm sm:text-base font-bold text-[#16302b]">
@@ -105,10 +105,10 @@ export const WalletActionList: React.FC = () => {
       {/* 5. Fika Points History Link matching Screenshot 2 */}
       <Link
         href={ROUTES.REWARDS_HISTORY}
-        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group block"
+        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 items-center justify-between shadow-2xs transition-all cursor-pointer group block"
       >
         <div className="flex items-center gap-4">
-          <div className="h-11 w-11 rounded-full bg-[#e8efe6] text-[#1e3932] flex items-center justify-center text-lg">
+          <div className="h-11 w-11 rounded-full bg-brand-sage text-[#1e3932] flex items-center justify-center text-lg">
             <StarOutlined />
           </div>
           <h4 className="text-sm sm:text-base font-bold text-[#16302b]">
@@ -124,7 +124,7 @@ export const WalletActionList: React.FC = () => {
         className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group"
       >
         <div className="flex items-center gap-4">
-          <div className="h-11 w-11 rounded-full bg-[#e8efe6] text-[#1e3932] flex items-center justify-center text-lg">
+          <div className="h-11 w-11 rounded-full bg-brand-sage text-[#1e3932] flex items-center justify-center text-lg">
             <ScanOutlined />
           </div>
           <h4 className="text-sm sm:text-base font-bold text-[#16302b]">

@@ -46,7 +46,7 @@ export const WalletActionList: React.FC = () => {
 
       {/* 2. Fika Offers Card matching Screenshot 2 */}
       <Link
-        href={ROUTES.HOME + "#offers"}
+        href={ROUTES.FIKA_OFFERS}
         className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group"
       >
         <div className="flex items-center gap-4">

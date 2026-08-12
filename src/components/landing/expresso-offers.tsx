@@ -8,20 +8,10 @@ import {
   LeftOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import { App, Modal } from "antd";
+import { App } from "antd";
+import { OfferDetailModal, Offer } from "@/components/common/offer-detail-modal";
 
-interface Offer {
-  id: string;
-  tag: string;
-  title: string;
-  expiresIn: string;
-  imageSrc: string;
-  description: string;
-  instruction: string;
-  terms: string;
-}
-
-const offersList: Offer[] = [
+export const offersList: Offer[] = [
   {
     id: "offer-1",
     tag: "Offer",
@@ -270,99 +260,14 @@ export const ExpressoOffers: React.FC = () => {
         </div>
       </div>
 
-      {/* ==============================================================================
-          Offer Detail Modal matching the User's Screenshot Design
-         ============================================================================== */}
-      {selectedOfferModal && (
-        <Modal
-          open={!!selectedOfferModal}
-          onCancel={() => setSelectedOfferModal(null)}
-          footer={null}
-          centered
-          closeIcon={null}
-          className="rounded-3xl overflow-hidden max-w-md"
-          modalRender={(modalContent) => (
-            <div className="rounded-3xl overflow-hidden shadow-2xl bg-white">
-              {modalContent}
-            </div>
-          )}
-        >
-          <div className="text-[#16302b]">
-            {/* Top Back Header Bar matching Screenshot */}
-            <div className="p-4 bg-white border-b border-gray-100 flex items-center justify-start">
-              <button
-                onClick={() => setSelectedOfferModal(null)}
-                className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-gray-800 bg-gray-100/80 hover:bg-gray-200 px-4 py-1.5 rounded-full transition-all border border-gray-200/60 shadow-2xs"
-              >
-                <LeftOutlined className="text-xs" />
-                <span>Back</span>
-              </button>
-            </div>
-
-            {/* Hero Image Section matching Screenshot */}
-            <div className="relative h-56 sm:h-64 w-full bg-gray-100 overflow-hidden">
-              <Image
-                src={selectedOfferModal.imageSrc}
-                alt={selectedOfferModal.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 448px"
-                className="object-cover"
-              />
-
-              {/* Offer Tag Badge matching Screenshot */}
-              <div className="absolute top-4 left-4">
-                <span className="bg-white/95 text-[#1e3932] text-xs font-bold px-3.5 py-1.5 rounded-full shadow-sm flex items-center gap-1.5">
-                  <CheckOutlined className="text-emerald-700 text-xs" />
-                  <span>{selectedOfferModal.tag}</span>
-                </span>
-              </div>
-            </div>
-
-            {/* Body Content Section matching Screenshot */}
-            <div className="p-6 space-y-4">
-              <h3 className="text-xl sm:text-2xl font-extrabold text-[#16302b] leading-tight">
-                {selectedOfferModal.title}
-              </h3>
-
-              <div className="space-y-3 text-xs sm:text-sm text-gray-700 leading-relaxed">
-                <p className="font-medium text-gray-800">
-                  {selectedOfferModal.description}
-                </p>
-
-                <p className="text-gray-600">
-                  {selectedOfferModal.instruction}
-                </p>
-
-                <div className="pt-2 border-t border-gray-100 text-xs font-semibold text-gray-500">
-                  {selectedOfferModal.expiresIn}
-                </div>
-              </div>
-
-              {/* Bottom Full-Width Pill Action Button matching Screenshot */}
-              <div className="pt-6">
-                <button
-                  onClick={() => {
-                    handleActivate(selectedOfferModal);
-                    setSelectedOfferModal(null);
-                  }}
-                  className={`w-full py-4 rounded-full font-bold text-sm sm:text-base transition-all shadow-md flex items-center justify-center gap-2 ${
-                    activatedOffers[selectedOfferModal.id]
-                      ? "bg-emerald-800 text-white hover:bg-emerald-900"
-                      : "bg-[#1e3932] hover:bg-primary-hover text-white active:scale-98"
-                  }`}
-                >
-                  <span>
-                    {activatedOffers[selectedOfferModal.id]
-                      ? "Deactivate Offer"
-                      : "Activate"}
-                  </span>
-                  <CheckOutlined className="text-sm" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </Modal>
-      )}
+      {/* Reusable Offer Detail Modal */}
+      <OfferDetailModal
+        open={!!selectedOfferModal}
+        offer={selectedOfferModal}
+        isActivated={!!(selectedOfferModal && activatedOffers[selectedOfferModal.id])}
+        onClose={() => setSelectedOfferModal(null)}
+        onToggleActivate={handleActivate}
+      />
     </div>
   );
 };

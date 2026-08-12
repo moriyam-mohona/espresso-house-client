@@ -2,21 +2,54 @@
 
 :root {
   --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --background: #f9fafb;
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --color-primary: #1e3932;
+  --color-primary-hover: #2d5349;
+  --color-primary-active: #142722;
+  --brand-green: #1e3932;
+  --brand-green-dark: #142722;
+  --brand-green-light: #2d5349;
+  --brand-sage: #e8efe6;
+  --brand-cream: #f4f6f0;
+  --background: #f7f8f6;
   --foreground: #111827;
 }
 
 @theme {
   --font-sans: var(--font-inter);
+  --font-serif: var(--font-serif);
+  --color-primary: #1e3932;
+  --color-primary-hover: #2d5349;
+  --color-primary-active: #142722;
+  --color-brand-green: #1e3932;
+  --color-brand-green-dark: #142722;
+  --color-brand-sage: #e8efe6;
+  --color-brand-cream: #f4f6f0;
 }
 
-/* Ensure Ant Design buttons and inputs preserve proper border styles under Tailwind v4 reset */
-.ant-btn {
-  box-shadow: none !important;
+.font-serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
 }
 
+/* Ensure Ant Design buttons and links preserve primary color #1e3932 */
 .ant-btn-primary {
-  background-color: #1677ff !important;
+  background-color: #1e3932 !important;
+  border-color: #1e3932 !important;
+}
+
+.ant-btn-primary:hover {
+  background-color: #2d5349 !important;
+  border-color: #2d5349 !important;
+}
+
+.ant-btn-primary:active {
+  background-color: #142722 !important;
+  border-color: #142722 !important;
+}
+
+a {
+  color: inherit;
 }
 
 /* Custom scrollbar styling for webkit */

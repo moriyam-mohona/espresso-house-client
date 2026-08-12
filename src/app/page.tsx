@@ -1,99 +1,87 @@
 "use client";
 
-import React from "react";
-import { AppCard, PageHeader, StatusBadge } from "@/components/ui";
-import { siteConfig } from "@/config/site";
-import { env } from "@/config/env";
+import { useState } from "react";
 import {
-  CheckCircleOutlined,
-  CodeOutlined,
-  ThunderboltOutlined,
-  SafetyCertificateOutlined,
-} from "@ant-design/icons";
+  Header,
+  RewardsBanner,
+  ExpressoFun,
+  HeroCarousel,
+  ExpressoOffers,
+  StoreSpotlight,
+  MyIdModal,
+  BottomNav,
+} from "@/components/landing";
+import { siteConfig } from "@/config/site";
+import { message } from "antd";
+import { HeartFilled } from "@ant-design/icons";
 
-export default function HomePage() {
-  const stackItems = [
-    {
-      title: "Next.js App Router",
-      desc: "Latest App Router with server-side rendering & route handlers.",
-      status: "Ready",
-    },
-    {
-      title: "TypeScript",
-      desc: "Strict type checking, alias paths (@/*), & type safety.",
-      status: "Ready",
-    },
-    {
-      title: "Ant Design & Tailwind CSS",
-      desc: "Integrated AntD v5 SSR registry with utility-first Tailwind styling.",
-      status: "Ready",
-    },
-    {
-      title: "Production Architecture",
-      desc: "Modular src/ structure with config, hooks, utils, & API layers.",
-      status: "Ready",
-    },
-  ];
+export default function LandingPage() {
+  const [myIdOpen, setMyIdOpen] = useState<boolean>(false);
+  const userPoints = 142;
+  const walletBalance = 24.5;
+
+  const handleOpenMyId = () => {
+    setMyIdOpen(true);
+  };
+
+  const handleCloseMyId = () => {
+    setMyIdOpen(false);
+  };
+
+  const handlePreOrder = () => {
+    message.success("Opening Espresso House Pre-Order Menu...");
+  };
 
   return (
-    <main className="min-h-screen bg-gray-50/50 p-6 md:p-12">
-      <div className="mx-auto max-w-5xl">
-        <PageHeader
-          title={siteConfig.name}
-          subtitle="Initial Frontend Application Scaffold — Production Ready"
-          action={
-            <StatusBadge status="success" label={`Environment: ${env.NODE_ENV}`} />
-          }
-        />
+    <div className="min-h-screen bg-[#f7f8f6] text-gray-900 font-sans flex flex-col justify-between">
+      {/* Top Header */}
+      <Header onOpenMyId={handleOpenMyId} userPoints={userPoints} />
 
-        <AppCard className="mb-8 border-gray-200/80 bg-white">
-          <div className="flex items-start gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-              <ThunderboltOutlined className="text-2xl" />
+      {/* Main Container */}
+      <main className="flex-1 pb-16 md:pb-12">
+        {/* Section 1: Loyalty/Rewards Banner matching Screenshot 1 */}
+        <RewardsBanner onCollectPointsClick={handleOpenMyId} />
+
+        {/* Section 2: Expresso Fun (Fika Fun) Challenges matching Screenshot 1 */}
+        <ExpressoFun />
+
+        {/* Section 3: Hero Banner Carousel ("Made with passion") matching Screenshot 2 */}
+        <HeroCarousel onTryHereClick={handlePreOrder} />
+
+        {/* Section 4: Expresso Offers matching Screenshot 2 */}
+        <ExpressoOffers />
+
+        {/* Section 5: Store Spotlight featuring coffee-shop.jpg */}
+        <StoreSpotlight onPreOrderClick={handlePreOrder} />
+      </main>
+
+      {/* Desktop Footer */}
+      <footer className="hidden md:block bg-[#16302b] text-emerald-100/80 border-t border-[#2d5349] py-8 px-6 text-xs">
+        <div className="mx-auto max-w-5xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <div className="h-7 w-7 rounded-full bg-[#e8efe6] text-[#1e3932] font-black flex items-center justify-center text-xs">
+              EH
             </div>
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900">
-                Step 1: Frontend Setup Complete
-              </h2>
-              <p className="mt-1 text-sm text-gray-500 leading-relaxed">
-                The project architecture has been configured with clean conventions,
-                reusable component abstractions, type-safe helpers, and SSR compatibility.
-                Ready to accept business feature requirements.
-              </p>
-            </div>
+            <span className="font-bold text-white text-sm">{siteConfig.name}</span>
+            <span className="text-emerald-300/60">• Coffee Commerce Platform</span>
           </div>
-        </AppCard>
 
-        <h3 className="mb-4 text-base font-semibold text-gray-900 flex items-center gap-2">
-          <CodeOutlined className="text-blue-600" /> Environment & Architecture Status
-        </h3>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {stackItems.map((item, idx) => (
-            <AppCard key={idx} className="bg-white hover:border-blue-300 transition-colors">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h4 className="font-medium text-gray-900 flex items-center gap-2">
-                    <CheckCircleOutlined className="text-emerald-500" />
-                    {item.title}
-                  </h4>
-                  <p className="mt-1 text-xs text-gray-500 leading-normal">
-                    {item.desc}
-                  </p>
-                </div>
-                <StatusBadge status="success" label={item.status} />
-              </div>
-            </AppCard>
-          ))}
+          <p className="text-center md:text-right">
+            © {new Date().getFullYear()} {siteConfig.company.name}. Made with <HeartFilled className="text-red-400" /> for coffee lovers.
+          </p>
         </div>
+      </footer>
 
-        <div className="mt-8 rounded-xl border border-blue-100 bg-blue-50/60 p-4 text-xs text-blue-800 flex items-center gap-3">
-          <SafetyCertificateOutlined className="text-base text-blue-600" />
-          <span>
-            <strong>Incremental Build System Active:</strong> Future features will be added step by step based on your flow requirements.
-          </span>
-        </div>
-      </div>
-    </main>
+      {/* Mobile Bottom Navigation matching Screenshot 2 */}
+      <BottomNav onOpenMyId={handleOpenMyId} walletBalance={walletBalance} />
+
+      {/* My ID QR Code Modal */}
+      <MyIdModal
+        open={myIdOpen}
+        onClose={handleCloseMyId}
+        userPoints={userPoints}
+        walletBalance={walletBalance}
+      />
+    </div>
   );
 }

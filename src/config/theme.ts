@@ -7,47 +7,57 @@ import { theme } from "antd";
  */
 export const customAntdTheme: ThemeConfig = {
   token: {
-    // Primary Brand Colors
-    colorPrimary: "#1677ff",
-    colorInfo: "#1677ff",
-    colorSuccess: "#52c41a",
+    // Primary Brand Colors (#1e3932 - Espresso House Deep Green)
+    colorPrimary: "#1e3932",
+    colorInfo: "#1e3932",
+    colorSuccess: "#2e7d32",
     colorWarning: "#faad14",
     colorError: "#ff4d4f",
-    colorLink: "#1677ff",
+    colorLink: "#1e3932",
+    colorBgContainer: "#ffffff",
 
-    // Typography
+    // Typography & Radii
     fontFamily:
-      "var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+      "var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
     fontSize: 14,
-    borderRadius: 6,
+    borderRadius: 8,
     wireframe: false,
   },
   components: {
     Button: {
-      controlHeight: 38,
-      borderRadius: 6,
-      fontWeight: 500,
+      colorPrimary: "#1e3932",
+      colorPrimaryHover: "#2d5349",
+      colorPrimaryActive: "#142722",
+      controlHeight: 40,
+      borderRadius: 8,
+      fontWeight: 600,
       boxShadow: "none",
     },
     Card: {
-      borderRadiusLG: 10,
-      colorBorderSecondary: "#f0f0f0",
+      borderRadiusLG: 16,
+      colorBorderSecondary: "#e8efe6",
     },
     Input: {
-      controlHeight: 38,
-      borderRadius: 6,
+      controlHeight: 40,
+      borderRadius: 8,
+      activeBorderColor: "#1e3932",
+      hoverBorderColor: "#2d5349",
     },
     Select: {
-      controlHeight: 38,
-      borderRadius: 6,
+      controlHeight: 40,
+      borderRadius: 8,
+      optionSelectedBg: "#e8efe6",
     },
     Table: {
-      borderRadius: 8,
-      headerBg: "#fafafa",
-      headerColor: "#1f2937",
+      borderRadius: 12,
+      headerBg: "#f4f6f0",
+      headerColor: "#1e3932",
     },
     Modal: {
-      borderRadiusLG: 12,
+      borderRadiusLG: 20,
+    },
+    Tag: {
+      borderRadiusSM: 6,
     },
   },
   algorithm: theme.defaultAlgorithm,

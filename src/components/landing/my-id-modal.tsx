@@ -36,7 +36,7 @@ export const MyIdModal: React.FC<MyIdModalProps> = ({
         <div className="flex items-center justify-between mb-4 border-b border-primary pb-3">
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-full overflow-hidden border border-[#d4a373] relative shrink-0">
-              <Image src="/logo.png" alt="Espresso House Logo" fill sizes="32px" className="object-cover" />
+              <Image src="/logo.png" alt="Espresso Club Logo" fill sizes="32px" className="object-cover" />
             </div>
             <span className="font-extrabold text-lg text-white">My ID & Membership</span>
           </div>
@@ -83,7 +83,7 @@ export const MyIdModal: React.FC<MyIdModalProps> = ({
 
         {/* Scanning Instructions */}
         <p className="text-xs text-emerald-100/70 leading-normal">
-          Scan this QR code at any Espresso House counter or POS scanner to earn points and redeem active vouchers.
+          Scan this QR code at any Espresso Club counter or POS scanner to earn points and redeem active vouchers.
         </p>
       </div>
     </Modal>

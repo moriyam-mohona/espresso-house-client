@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
       <div className="bg-[#1e3932] text-white px-4 py-3 flex items-center justify-between md:hidden">
         <div className="flex items-center gap-3">
           <div className="h-9 w-9 rounded-full overflow-hidden border border-[#d4a373] relative shrink-0">
-            <Image src="/logo.png" alt="Espresso House Logo" fill sizes="36px" className="object-cover" />
+            <Image src="/logo.png" alt="Espresso Club Logo" fill sizes="36px" className="object-cover" />
           </div>
           <div>
             <h1 className="text-xl font-bold tracking-wide">Hi!</h1>
@@ -65,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2.5">
               <div className="h-10 w-10 rounded-full overflow-hidden border border-[#d4a373] relative shrink-0 shadow-xs">
-                <Image src="/logo.png" alt="Espresso House Logo" fill sizes="40px" className="object-cover" />
+                <Image src="/logo.png" alt="Espresso Club Logo" fill sizes="40px" className="object-cover" />
               </div>
               <span className="font-extrabold text-2xl tracking-tight text-white">{siteConfig.name}</span>
             </div>

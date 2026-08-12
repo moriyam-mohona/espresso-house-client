@@ -7,7 +7,7 @@ import { theme } from "antd";
  */
 export const customAntdTheme: ThemeConfig = {
   token: {
-    // Primary Brand Colors (#1e3932 - Espresso House Deep Green)
+    // Primary Brand Colors (#1e3932 - Espresso Club Deep Green)
     colorPrimary: "#1e3932",
     colorInfo: "#1e3932",
     colorSuccess: "#2e7d32",

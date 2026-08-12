@@ -16,13 +16,13 @@ export const DUMMY_CHALLENGES: ChallengeItem[] = [
     id: "ch-1",
     badge: "New",
     points: 3,
-    title: "Visit Espresso House 2 times in 10 days",
+    title: "Visit Espresso Club 2 times in 10 days",
     subtitle: "Ends in 20 days",
     currentProgress: 0,
     totalRequired: 2,
     status: "active",
     descriptionHeader:
-      "When is Espresso House enough Espresso House? We haven't found our limit yet! To complete this challenge, visit us 2 times within 10 days.",
+      "When is Espresso Club enough Espresso Club? We haven't found our limit yet! To complete this challenge, visit us 2 times within 10 days.",
     descriptionBody:
       "For your visit to count in this challenge, you must complete 2 point-earning purchases in our coffee shops within 10 days. You can order both in the shop or pre order to skip the queue.",
   },

@@ -46,7 +46,7 @@ export const DUMMY_REWARDS: RewardItem[] = [
     imageSrc: "/coffee-shop.jpg",
     subtitle: "Flaky butter croissant fresh from our bakery oven.",
     description:
-      "Enjoy a warm, golden butter croissant handcrafted daily at your local Espresso House.",
+      "Enjoy a warm, golden butter croissant handcrafted daily at your local Espresso Club.",
     category: "Bakery",
   },
   {
@@ -82,7 +82,7 @@ export interface PointsHistoryItem {
 export const DUMMY_POINTS_HISTORY: PointsHistoryItem[] = [
   {
     id: "hist-1",
-    title: "Visit Espresso House 2 times Challenge",
+    title: "Visit Espresso Club 2 times Challenge",
     date: "Aug 10, 2026",
     points: 3,
     type: "earned",

@@ -107,7 +107,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         placement="bottom"
         styles={{ wrapper: { height: "auto" } }}
         className="rounded-t-3xl"
-        title={<span className="font-extrabold text-[#16302b]">Espresso House Menu</span>}
+        title={<span className="font-extrabold text-[#16302b]">Espresso Club Menu</span>}
       >
         <div className="space-y-3 pb-6">
           <Link

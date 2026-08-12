@@ -1,4 +1,4 @@
-# Espresso House Client — Enterprise SaaS Frontend Foundation
+# Espresso Club Client — Enterprise SaaS Frontend Foundation
 
 A modern, production-ready, scalable SaaS frontend template built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, and **Ant Design (AntD v5)**.
 
@@ -21,7 +21,7 @@ A modern, production-ready, scalable SaaS frontend template built with **Next.js
 ## 📁 Directory & Folder Structure
 
 ```
-espresso-house-client/
+espresso-club-client/
 ├── public/                     # Static assets (favicons, public images)
 ├── src/
 │   ├── app/                    # Next.js App Router route hierarchy

@@ -171,7 +171,7 @@ export default function MyIdPage() {
             About Member ID
           </h3>
           <p className="text-sm text-gray-600 leading-relaxed">
-            Scan your unique Member QR Code or Barcode at any Espresso House store checkout to earn Fika Points, redeem offers, and pay seamlessly using your digital Coffee Card.
+            Scan your unique Member QR Code or Barcode at any Espresso Club store checkout to earn Fika Points, redeem offers, and pay seamlessly using your digital Coffee Card.
           </p>
           <div className="mt-6">
             <button

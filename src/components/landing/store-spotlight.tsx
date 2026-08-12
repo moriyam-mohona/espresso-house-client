@@ -12,7 +12,7 @@ export const StoreSpotlight: React.FC<{ onPreOrderClick?: () => void }> = ({ onP
         <div className="relative h-64 md:h-full min-h-75">
           <Image
             src="/coffee-shop.jpg"
-            alt="Espresso House Coffee Shop"
+            alt="Espresso Club Coffee Shop"
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
@@ -22,7 +22,7 @@ export const StoreSpotlight: React.FC<{ onPreOrderClick?: () => void }> = ({ onP
             <span className="bg-[#1e3932] text-xs font-bold px-3 py-1 rounded-full">
               Nearest Branch
             </span>
-            <h3 className="text-lg font-bold mt-1">Central Station House</h3>
+            <h3 className="text-lg font-bold mt-1">Central Station Club</h3>
           </div>
         </div>
 
@@ -41,7 +41,7 @@ export const StoreSpotlight: React.FC<{ onPreOrderClick?: () => void }> = ({ onP
 
             <div>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-[#16302b] tracking-tight">
-                Central Station House
+                Central Station Club
               </h3>
               <p className="text-xs sm:text-sm text-gray-500 mt-1">
                 Klarabergsviadukten 90, Central Station, Stockholm

@@ -28,7 +28,7 @@ export const env = {
    * Application Title / Prefix
    */
   NEXT_PUBLIC_APP_TITLE:
-    process.env.NEXT_PUBLIC_APP_TITLE || "Espresso SaaS",
+    process.env.NEXT_PUBLIC_APP_TITLE || "Espresso Club",
 
   /**
    * API Timeout in milliseconds

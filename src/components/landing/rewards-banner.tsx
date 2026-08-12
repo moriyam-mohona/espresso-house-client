@@ -16,17 +16,17 @@ export const RewardsBanner: React.FC = () => {
               Collect points to get rewards
             </h2>
             <div className="flex items-center gap-2 text-sm sm:text-base font-semibold text-[#1e3932] group-hover:translate-x-1 transition-transform">
-              <span>Expresso House</span>
+              <span>Expresso Club</span>
               <ArrowRightOutlined className="text-xs" />
             </div>
           </div>
 
-          {/* Circular Espresso House Badge Logo Image */}
+          {/* Circular Espresso Club Badge Logo Image */}
           <div className="relative shrink-0">
             <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full overflow-hidden shadow-md border-2 border-[#d4a373] relative">
               <Image
                 src="/logo.png"
-                alt="Espresso House Logo"
+                alt="Espresso Club Logo"
                 fill
                 sizes="(max-width: 640px) 56px, 64px"
                 className="object-cover"

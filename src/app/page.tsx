@@ -30,7 +30,7 @@ export default function LandingPage() {
   };
 
   const handlePreOrder = () => {
-    message.success("Opening Espresso House Pre-Order Menu...");
+    message.success("Opening Espresso Club Pre-Order Menu...");
   };
 
   return (

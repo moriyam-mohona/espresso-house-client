@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ["Espresso House", "Coffee", "FikaHub", "Loyalty", "Coffee Card", "Pre-order"],
+  keywords: ["Espresso Club", "Coffee", "FikaHub", "Loyalty", "Coffee Card", "Pre-order"],
   authors: [{ name: siteConfig.company.name }],
   icons: {
     icon: "/logo.png",

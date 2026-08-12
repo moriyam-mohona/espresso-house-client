@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { InfoCircleOutlined, CheckOutlined } from "@ant-design/icons";
-import { message, Modal } from "antd";
+import { App, Modal } from "antd";
 
 interface Offer {
   id: string;
@@ -46,6 +46,7 @@ const offersList: Offer[] = [
 ];
 
 export const ExpressoOffers: React.FC = () => {
+  const { message } = App.useApp();
   const [activatedOffers, setActivatedOffers] = useState<Record<string, boolean>>({});
   const [selectedOfferModal, setSelectedOfferModal] = useState<Offer | null>(null);
 
@@ -91,6 +92,7 @@ export const ExpressoOffers: React.FC = () => {
                   src={offer.imageSrc}
                   alt={offer.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 340px"
                   className="object-cover"
                 />
 

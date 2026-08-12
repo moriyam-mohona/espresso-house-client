@@ -12,10 +12,11 @@ import {
   BottomNav,
 } from "@/components/landing";
 import { siteConfig } from "@/config/site";
-import { message } from "antd";
+import { App } from "antd";
 import { HeartFilled } from "@ant-design/icons";
 
 export default function LandingPage() {
+  const { message } = App.useApp();
   const [myIdOpen, setMyIdOpen] = useState<boolean>(false);
   const userPoints = 142;
   const walletBalance = 24.5;

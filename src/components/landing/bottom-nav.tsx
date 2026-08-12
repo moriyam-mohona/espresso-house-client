@@ -8,7 +8,7 @@ import {
   EllipsisOutlined,
   QrcodeOutlined,
 } from "@ant-design/icons";
-import { Badge, Drawer, message } from "antd";
+import { Badge, Drawer, App } from "antd";
 
 interface BottomNavProps {
   onOpenMyId: () => void;
@@ -23,6 +23,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   onTabChange,
   walletBalance = 24.5,
 }) => {
+  const { message } = App.useApp();
   const [currentTab, setCurrentTab] = useState<string>(activeTab);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
@@ -41,7 +42,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
 
   return (
     <>
-      {/* Mobile Sticky Bottom Navigation matching Screenshot 2 */}
+      {/* Mobile Sticky Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-lg md:hidden px-4 py-2 flex items-center justify-around">
         {/* Tab 1: Start (Home) */}
         <button
@@ -103,7 +104,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         placement="bottom"
-        height="auto"
+        styles={{ wrapper: { height: "auto" } }}
         className="rounded-t-3xl"
         title={<span className="font-extrabold text-[#16302b]">Espresso House Menu</span>}
       >

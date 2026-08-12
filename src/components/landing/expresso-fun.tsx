@@ -10,11 +10,12 @@ import {
   CloseOutlined,
   ShoppingOutlined,
 } from "@ant-design/icons";
-import { Modal, message } from "antd";
+import { Modal, App } from "antd";
 import { ROUTES } from "@/constants/routes";
 import { DUMMY_CHALLENGES, ChallengeItem } from "@/constants/challenges-data";
 
 export const ExpressoFun: React.FC = () => {
+  const { message } = App.useApp();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState<boolean>(false);
   const [canScrollRight, setCanScrollRight] = useState<boolean>(true);

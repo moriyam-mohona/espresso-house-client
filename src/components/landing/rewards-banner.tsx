@@ -28,6 +28,7 @@ export const RewardsBanner: React.FC = () => {
                 src="/logo.png"
                 alt="Espresso House Logo"
                 fill
+                sizes="(max-width: 640px) 56px, 64px"
                 className="object-cover"
               />
             </div>

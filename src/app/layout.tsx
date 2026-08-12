@@ -40,7 +40,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="min-h-screen bg-[#f7f8f6] font-sans antialiased text-gray-900 pb-20 md:pb-0">
+      <body
+        suppressHydrationWarning
+        className="min-h-screen bg-[#f7f8f6] font-sans antialiased text-gray-900 pb-20 md:pb-0"
+      >
         <AntdRegistry>
           <AntdProvider>{children}</AntdProvider>
         </AntdRegistry>

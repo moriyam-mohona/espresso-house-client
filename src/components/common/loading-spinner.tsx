@@ -21,14 +21,14 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   if (fullScreen) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-xs">
-        <Spin size="large" tip={tip} />
+        <Spin size="large" description={tip} />
       </div>
     );
   }
 
   return (
     <div className={cn("flex items-center justify-center p-8", className)}>
-      <Spin size="medium" tip={tip} />
+      <Spin size="medium" description={tip} />
     </div>
   );
 };

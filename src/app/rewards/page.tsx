@@ -11,7 +11,7 @@ import {
   CloseOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
-import { Modal, message } from "antd";
+import { Modal, App } from "antd";
 import { ROUTES } from "@/constants/routes";
 import {
   DUMMY_REWARDS,
@@ -21,6 +21,7 @@ import {
 } from "@/constants/rewards-data";
 
 export default function RewardsPage() {
+  const { message } = App.useApp();
   const [userPoints, setUserPoints] = useState<number>(0);
   const [showEarnInfoModal, setShowEarnInfoModal] = useState<boolean>(false);
   const [selectedReward, setSelectedReward] = useState<RewardItem | null>(null);
@@ -139,6 +140,7 @@ export default function RewardsPage() {
                       src={reward.imageSrc}
                       alt={reward.title}
                       fill
+                      sizes="(max-width: 768px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
@@ -244,6 +246,7 @@ export default function RewardsPage() {
                   src={selectedReward.imageSrc}
                   alt={selectedReward.title}
                   fill
+                  sizes="176px"
                   className="object-cover"
                 />
               </div>

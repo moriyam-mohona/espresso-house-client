@@ -61,6 +61,7 @@ export const HeroCarousel: React.FC<{ onTryHereClick?: () => void }> = ({ onTryH
           alt={slide.subtitle}
           fill
           priority
+          sizes="(max-width: 1024px) 100vw, 1024px"
           className="object-cover object-center transition-transform duration-700 scale-105 group-hover:scale-100"
         />
 

@@ -8,49 +8,43 @@ import { MemberIdCard } from "@/components/wallet/member-id-card";
 import { CoffeeCardBalance } from "@/components/wallet/coffee-card-balance";
 import { FikaPointsBanner } from "@/components/wallet/fika-points-banner";
 import { WalletActionList } from "@/components/wallet/wallet-action-list";
-import { ExpressoOffers } from "@/components/landing/expresso-offers";
 
-export default function MyIdPage() {
+export default function WalletPage() {
   return (
     <div className="min-h-screen bg-[#f7f8f6] text-gray-900 font-sans flex flex-col justify-between">
       {/* Sticky Header Bar */}
-      <header className="sticky top-0 z-30 bg-brand-sage px-4 py-3 border-b border-[#d6e3d3]/80">
+      <header className="sticky top-0 z-30 bg-white px-4 py-3.5 border-b border-gray-200/80 shadow-2xs">
         <div className="mx-auto max-w-md md:max-w-xl flex items-center justify-between">
           <Link
             href={ROUTES.HOME}
-            className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-gray-800 bg-white px-3.5 py-1.5 rounded-full shadow-xs hover:bg-gray-100 transition-all border border-gray-200/60"
+            className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-gray-800 bg-gray-100 hover:bg-gray-200 px-3.5 py-1.5 rounded-full transition-all border border-gray-200/60"
           >
             <LeftOutlined className="text-xs" />
             <span>Back</span>
           </Link>
 
-          <h1 className="text-base sm:text-lg font-bold text-[#16302b]">
-            Member ID & Wallet
+          <h1 className="text-xl sm:text-2xl font-extrabold text-[#16302b] tracking-tight">
+            Wallet
           </h1>
 
           <div className="w-16" />
         </div>
       </header>
 
-      {/* Main Container */}
+      {/* Main Wallet Container matching Screenshots 1, 2, 3 & 4 */}
       <main className="flex-1 pb-16 pt-4">
         <div className="mx-auto max-w-md sm:max-w-xl px-4 space-y-4">
-          {/* Reusable Member ID Card */}
+          {/* Section 1: Member ID Card */}
           <MemberIdCard />
 
-          {/* Reusable Coffee Card Balance Box */}
+          {/* Section 2: Coffee Card Balance Container */}
           <CoffeeCardBalance />
 
-          {/* Reusable Fika Points Banner */}
+          {/* Section 3: Loyalty Fika Points Banner */}
           <FikaPointsBanner />
 
-          {/* Reusable Wallet Actions List */}
+          {/* Section 4 & 5: Gift & Interactive Wallet Options */}
           <WalletActionList />
-
-          {/* Embedded Expresso Offers Carousel */}
-          <div className="pt-2">
-            <ExpressoOffers />
-          </div>
         </div>
       </main>
     </div>

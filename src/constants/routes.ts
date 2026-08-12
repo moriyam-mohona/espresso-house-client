@@ -8,6 +8,7 @@ export const ROUTES = {
   REWARDS_HISTORY: "/rewards/history",
   CHALLENGES: "/challenges",
   MY_ID: "/my-id",
+  WALLET: "/wallet",
   // Authentication route placeholders
   AUTH: {
     LOGIN: "/login",

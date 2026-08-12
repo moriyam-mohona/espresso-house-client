@@ -95,13 +95,13 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
 
               <div className="h-4 w-px bg-emerald-700/60" />
 
-              <a
-                href="#offers"
-                className="flex items-center gap-1.5 text-white/90! hover:text-white! transition-colors py-1 group"
+              <Link
+                href={ROUTES.ORDER}
+                className="flex items-center gap-1.5 text-white/90 hover:text-white transition-colors py-1 group"
               >
-                <ShoppingOutlined className="text-base text-emerald-300! group-hover:scale-110 transition-transform" />
+                <ShoppingOutlined className="text-base text-emerald-300 group-hover:scale-110 transition-transform" />
                 <span>Order</span>
-              </a>
+              </Link>
             </nav>
 
             <div className="h-5 w-px bg-emerald-700/60" />

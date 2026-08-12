@@ -73,8 +73,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         </Link>
 
         {/* Tab 3: Order */}
-        <button
-          onClick={() => handleSelectTab("order")}
+        <Link
+          href={ROUTES.ORDER}
+          onClick={() => setCurrentTab("order")}
           className={`flex flex-col items-center justify-center py-1 px-4 rounded-full transition-all ${
             currentTab === "order"
               ? "bg-brand-sage text-[#1e3932] font-bold shadow-2xs"
@@ -85,7 +86,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
             <ShoppingOutlined className="text-xl" />
           </Badge>
           <span className="text-[11px] font-semibold mt-0.5">Order</span>
-        </button>
+        </Link>
 
         {/* Tab 4: More */}
         <button

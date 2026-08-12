@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { LeftOutlined } from "@ant-design/icons";
 import { ROUTES } from "@/constants/routes";
-import { MemberIdCard } from "@/components/wallet/member-id-card";
 import { CoffeeCardBalance } from "@/components/wallet/coffee-card-balance";
 import { FikaPointsBanner } from "@/components/wallet/fika-points-banner";
 import { WalletActionList } from "@/components/wallet/wallet-action-list";

@@ -34,16 +34,13 @@ export default function WalletPage() {
       {/* Main Wallet Container matching Screenshots 1, 2, 3 & 4 */}
       <main className="flex-1 pb-16 pt-4">
         <div className="mx-auto max-w-md sm:max-w-7xl px-4 space-y-4">
-          {/* Section 1: Member ID Card */}
-          <MemberIdCard />
-
-          {/* Section 2: Coffee Card Balance Container */}
+          {/* Section 1: Coffee Card Balance Container */}
           <CoffeeCardBalance />
 
-          {/* Section 3: Loyalty Fika Points Banner */}
+          {/* Section 2: Loyalty Fika Points Banner */}
           <FikaPointsBanner />
 
-          {/* Section 4 & 5: Gift & Interactive Wallet Options */}
+          {/* Section 3 & 4: Gift & Interactive Wallet Options */}
           <WalletActionList />
         </div>
       </main>

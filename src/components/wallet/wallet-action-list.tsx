@@ -8,19 +8,11 @@ import {
   CreditCardOutlined,
   FileTextOutlined,
   StarOutlined,
-  ScanOutlined,
   RightOutlined,
 } from "@ant-design/icons";
 import { ROUTES } from "@/constants/routes";
-import { App } from "antd";
 
 export const WalletActionList: React.FC = () => {
-  const { message } = App.useApp();
-
-  const handleAction = (title: string) => {
-    message.info(`Opening ${title}...`);
-  };
-
   return (
     <div className="space-y-3">
       {/* 1. Send a Gift Banner matching Screenshot 1 & 2 */}
@@ -86,9 +78,9 @@ export const WalletActionList: React.FC = () => {
         </div>
       </Link>
 
-      {/* 4. Receipts matching Screenshot 2 */}
-      <div
-        onClick={() => handleAction("Receipts History")}
+      {/* 4. Receipts Link matching User Flow */}
+      <Link
+        href={ROUTES.RECEIPTS}
         className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group"
       >
         <div className="flex items-center gap-4">
@@ -100,12 +92,12 @@ export const WalletActionList: React.FC = () => {
           </h4>
         </div>
         <RightOutlined className="text-xs text-emerald-700 font-bold" />
-      </div>
+      </Link>
 
-      {/* 5. Fika Points History Link matching Screenshot 2 */}
+      {/* 5. Fika Points Link matching User Request */}
       <Link
-        href={ROUTES.REWARDS_HISTORY}
-        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 items-center justify-between shadow-2xs transition-all cursor-pointer group block"
+        href={ROUTES.REWARDS}
+        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group"
       >
         <div className="flex items-center gap-4">
           <div className="h-11 w-11 rounded-full bg-brand-sage text-[#1e3932] flex items-center justify-center text-lg">
@@ -117,22 +109,6 @@ export const WalletActionList: React.FC = () => {
         </div>
         <RightOutlined className="text-xs text-emerald-700 font-bold" />
       </Link>
-
-      {/* 6. Scan Offers matching Screenshot 2 */}
-      <div
-        onClick={() => handleAction("Offer Scanner")}
-        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group"
-      >
-        <div className="flex items-center gap-4">
-          <div className="h-11 w-11 rounded-full bg-brand-sage text-[#1e3932] flex items-center justify-center text-lg">
-            <ScanOutlined />
-          </div>
-          <h4 className="text-sm sm:text-base font-bold text-[#16302b]">
-            Scan Offers
-          </h4>
-        </div>
-        <RightOutlined className="text-xs text-emerald-700 font-bold" />
-      </div>
     </div>
   );
 };

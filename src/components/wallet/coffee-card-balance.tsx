@@ -1,8 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { InfoCircleOutlined, RightOutlined, CreditCardOutlined } from "@ant-design/icons";
-import { Modal, App } from "antd";
+import {
+  InfoCircleOutlined,
+  CreditCardOutlined,
+  LockOutlined,
+} from "@ant-design/icons";
+import { Modal, App, Input } from "antd";
 
 interface CoffeeCardBalanceProps {
   balance?: number;
@@ -16,21 +20,46 @@ export const CoffeeCardBalance: React.FC<CoffeeCardBalanceProps> = ({
   const { message } = App.useApp();
   const [currentBalance, setCurrentBalance] = useState<number>(balance);
   const [showBalanceInfoModal, setShowBalanceInfoModal] = useState<boolean>(false);
-  const [showTopUpModal, setShowTopUpModal] = useState<boolean>(false);
-  const [showRegisterCardModal, setShowRegisterCardModal] = useState<boolean>(false);
-  const [selectedTopUpAmount, setSelectedTopUpAmount] = useState<number>(200);
 
-  const handleProcessTopUp = () => {
+  // Modal Step states for Top-Up flow
+  const [showSelectAmountModal, setShowSelectAmountModal] = useState<boolean>(false);
+  const [showRegisterPromptModal, setShowRegisterPromptModal] = useState<boolean>(false);
+  const [showAddCardModal, setShowAddCardModal] = useState<boolean>(false);
+
+  const [selectedTopUpAmount, setSelectedTopUpAmount] = useState<number>(200);
+  const [cardNumber, setCardNumber] = useState<string>("");
+  const [expiryDate, setExpiryDate] = useState<string>("");
+  const [securityCode, setSecurityCode] = useState<string>("");
+
+  // Step 1: User selects amount & clicks Continue
+  const handleAmountContinue = () => {
+    setShowSelectAmountModal(false);
+    setShowRegisterPromptModal(true);
+  };
+
+  // Step 2: User clicks Add Payment Method in prompt modal
+  const handleOpenAddCardForm = () => {
+    setShowRegisterPromptModal(false);
+    setShowAddCardModal(true);
+  };
+
+  // Step 3: User submits payment card form & completes Top Up
+  const handleSaveCardAndCompleteTopUp = () => {
+    if (cardNumber.trim() === "") {
+      message.error("Please enter a valid card number.");
+      return;
+    }
     const newBal = currentBalance + selectedTopUpAmount;
     setCurrentBalance(newBal);
     if (onBalanceChange) onBalanceChange(newBal);
-    message.success(`🎉 Successfully topped up ${selectedTopUpAmount} SEK to your Coffee Card!`);
-    setShowTopUpModal(false);
-  };
 
-  const handleRegisterPaymentCard = () => {
-    message.success("Payment card registered successfully!");
-    setShowRegisterCardModal(false);
+    message.success(
+      `🎉 Payment card registered! ${selectedTopUpAmount} SEK added to Coffee Card balance.`
+    );
+    setShowAddCardModal(false);
+    setCardNumber("");
+    setExpiryDate("");
+    setSecurityCode("");
   };
 
   return (
@@ -62,27 +91,20 @@ export const CoffeeCardBalance: React.FC<CoffeeCardBalanceProps> = ({
 
           {/* Top Up Button */}
           <button
-            onClick={() => setShowTopUpModal(true)}
+            onClick={() => setShowSelectAmountModal(true)}
             className="mt-4 bg-[#947864] hover:bg-[#7e6452] text-white px-9 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all shadow-2xs active:scale-95"
           >
             Top up
           </button>
         </div>
-
-        {/* Bottom Link Row matching Screenshot 1 */}
-        <button
-          onClick={() => setShowRegisterCardModal(true)}
-          className="w-full bg-white/60 hover:bg-white px-5 py-3.5 border-t border-[#e2d7cb]/70 flex items-center justify-between text-xs sm:text-sm font-semibold text-[#2c221a] transition-colors text-left"
-        >
-          <span>Top up someone elses Coffee card balance</span>
-          <RightOutlined className="text-xs text-gray-500" />
-        </button>
       </div>
 
-      {/* Modal 1: Select Top Up Amount matching Screenshot 3 */}
+      {/* ==============================================================================
+          STEP 1 MODAL: Select Top up amount
+         ============================================================================== */}
       <Modal
-        open={showTopUpModal}
-        onCancel={() => setShowTopUpModal(false)}
+        open={showSelectAmountModal}
+        onCancel={() => setShowSelectAmountModal(false)}
         footer={null}
         centered
         className="rounded-3xl overflow-hidden max-w-md"
@@ -92,8 +114,8 @@ export const CoffeeCardBalance: React.FC<CoffeeCardBalanceProps> = ({
           </div>
         )}
       >
-        <div className="p-6 text-center text-[#16302b]">
-          <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-4" />
+        <div className="text-center text-[#16302b]">
+          
 
           {/* Credit Card Icon */}
           <div className="h-14 w-20 rounded-xl border-2 border-gray-700 flex items-center justify-center mx-auto mb-3">
@@ -106,13 +128,13 @@ export const CoffeeCardBalance: React.FC<CoffeeCardBalanceProps> = ({
 
           {/* Amount Options Selector matching Screenshot 3 */}
           <div className="space-y-2 max-w-xs mx-auto mb-4">
-            {[100, 200, 300, 500].map((amt) => (
+            {[300, 600].map((amt) => (
               <button
                 key={amt}
                 onClick={() => setSelectedTopUpAmount(amt)}
-                className={`w-full py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all border ${
+                className={`w-full py-3 rounded-2xl cursor-pointer font-bold text-xs sm:text-sm transition-all border ${
                   selectedTopUpAmount === amt
-                    ? "bg-[#e8efe6] text-[#1e3932] border-[#1e3932] shadow-2xs font-extrabold"
+                    ? "bg-brand-sage text-[#1e3932] border-[#1e3932] shadow-2xs font-extrabold"
                     : "bg-gray-50 text-gray-700 border-gray-200/80 hover:bg-gray-100"
                 }`}
               >
@@ -126,18 +148,20 @@ export const CoffeeCardBalance: React.FC<CoffeeCardBalanceProps> = ({
           </p>
 
           <button
-            onClick={handleProcessTopUp}
-            className="w-full bg-[#1e3932] hover:bg-[#2d5349] text-white py-3.5 rounded-full font-bold text-sm transition-all shadow-md active:scale-98"
+            onClick={handleAmountContinue}
+            className="w-full bg-[#1e3932] cursor-pointer hover:bg-primary-hover text-white py-3.5 rounded-full font-bold text-sm transition-all shadow-md active:scale-98"
           >
             Continue
           </button>
         </div>
       </Modal>
 
-      {/* Modal 2: Register Payment Card matching Screenshot 3 */}
+      {/* ==============================================================================
+          STEP 2 MODAL: Register your payment card Prompt
+         ============================================================================== */}
       <Modal
-        open={showRegisterCardModal}
-        onCancel={() => setShowRegisterCardModal(false)}
+        open={showRegisterPromptModal}
+        onCancel={() => setShowRegisterPromptModal(false)}
         footer={null}
         centered
         className="rounded-3xl overflow-hidden max-w-md"
@@ -147,24 +171,26 @@ export const CoffeeCardBalance: React.FC<CoffeeCardBalanceProps> = ({
           </div>
         )}
       >
-        <div className="p-6 text-[#16302b]">
-          <h3 className="text-base font-extrabold text-[#16302b] mb-2">
+        <div className="text-[#16302b]">
+
+          <h3 className="text-lg font-extrabold text-[#16302b] mb-2">
             Register your payment card
           </h3>
-          <p className="text-xs text-gray-600 leading-relaxed mb-6">
+          <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
             To top up someone else&apos;s app, you may first register a payment card. Would you like to do that now?
           </p>
 
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             <button
-              onClick={handleRegisterPaymentCard}
-              className="w-full bg-[#1e3932] hover:bg-[#2d5349] text-white py-3 rounded-full font-bold text-xs sm:text-sm transition-all shadow-xs"
+              onClick={handleOpenAddCardForm}
+              className="w-full bg-[#1e3932] cursor-pointer hover:bg-primary-hover text-white py-3.5 rounded-full font-bold text-sm transition-all shadow-xs"
             >
               Add Payment method
             </button>
+
             <button
-              onClick={() => setShowRegisterCardModal(false)}
-              className="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 py-3 rounded-full font-bold text-xs sm:text-sm transition-all"
+              onClick={() => setShowRegisterPromptModal(false)}
+              className="w-full bg-white cursor-pointer border border-[#1e3932] hover:bg-gray-50 text-[#1e3932] py-3.5 rounded-full font-bold text-sm transition-all"
             >
               Cancel
             </button>
@@ -172,7 +198,96 @@ export const CoffeeCardBalance: React.FC<CoffeeCardBalanceProps> = ({
         </div>
       </Modal>
 
-      {/* Modal 3: Coffee Card Balance Info matching Screenshot 3 & 4 */}
+      {/* ==============================================================================
+          STEP 3 MODAL: Add Card Details Form
+         ============================================================================== */}
+      <Modal
+        open={showAddCardModal}
+        onCancel={() => setShowAddCardModal(false)}
+        footer={null}
+        centered
+        className="rounded-3xl overflow-hidden max-w-md"
+        modalRender={(modalContent) => (
+          <div className="rounded-3xl overflow-hidden shadow-2xl bg-white">
+            {modalContent}
+          </div>
+        )}
+      >
+        <div className="text-[#16302b]">
+          
+          <h3 className="text-lg font-extrabold text-[#16302b] mb-4 text-center">
+            Add card
+          </h3>
+
+          {/* Form Container matching Screenshot 2 */}
+          <div className="bg-slate-50 border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-2xs">
+            {/* Form Header */}
+            <div className="flex items-center gap-2 border-b border-slate-200/80 pb-3">
+              <CreditCardOutlined className="text-lg text-slate-800" />
+              <span className="font-extrabold text-sm text-slate-900">Cards</span>
+            </div>
+
+            <p className="text-[11px] text-slate-500 font-medium -mt-2">
+              All fields are required unless marked otherwise.
+            </p>
+
+            {/* Field 1: Card Number */}
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700">Card number</label>
+              <Input
+                placeholder="4242 4242 4242 4242"
+                value={cardNumber}
+                onChange={(e) => setCardNumber(e.target.value)}
+                suffix={<CreditCardOutlined className="text-gray-400" />}
+                className="rounded-xl py-2.5 text-sm bg-white"
+              />
+            </div>
+
+            {/* Field 2: Expiry Date */}
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700">Expiry date</label>
+              <Input
+                placeholder="MM/YY"
+                value={expiryDate}
+                onChange={(e) => setExpiryDate(e.target.value)}
+                className="rounded-xl py-2.5 text-sm bg-white"
+              />
+              <p className="text-[10px] text-gray-500 font-medium">
+                Front of card in MM/YY format
+              </p>
+            </div>
+
+            {/* Field 3: Security Code */}
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700">Security code</label>
+              <Input
+                placeholder="CVC / CVV"
+                type="password"
+                maxLength={4}
+                value={securityCode}
+                onChange={(e) => setSecurityCode(e.target.value)}
+                className="rounded-xl py-2.5 text-sm bg-white"
+              />
+              <p className="text-[10px] text-gray-500 font-medium">
+                3 digits on back of card
+              </p>
+            </div>
+
+            {/* Save Details Button matching Screenshot 2 */}
+            <div className="pt-2">
+              <button
+                onClick={handleSaveCardAndCompleteTopUp}
+                className="w-full cursor-pointer bg-[#0a192f] hover:bg-[#122542] text-white py-3.5 rounded-xl font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2"
+              >
+                <LockOutlined className="text-xs" />
+                <span>Save details</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Coffee Card Balance Info Modal */}
       <Modal
         open={showBalanceInfoModal}
         onCancel={() => setShowBalanceInfoModal(false)}
@@ -185,8 +300,8 @@ export const CoffeeCardBalance: React.FC<CoffeeCardBalanceProps> = ({
           </div>
         )}
       >
-        <div className="p-6 text-center text-[#16302b]">
-          <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-4" />
+        <div className="text-center text-[#16302b]">
+          
           <h3 className="text-base font-extrabold text-[#16302b] text-left mb-2">
             Coffee Card Balance
           </h3>
@@ -199,7 +314,7 @@ export const CoffeeCardBalance: React.FC<CoffeeCardBalanceProps> = ({
 
           <button
             onClick={() => setShowBalanceInfoModal(false)}
-            className="w-full bg-[#1e3932] hover:bg-[#2d5349] text-white py-3 rounded-full font-bold text-sm transition-all"
+            className="w-full bg-[#1e3932] hover:bg-primary-hover text-white py-3 rounded-full font-bold text-sm transition-all"
           >
             Close
           </button>

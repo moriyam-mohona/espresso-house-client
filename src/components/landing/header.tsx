@@ -84,12 +84,12 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
           </div>
 
           <div className="flex items-center gap-6">
-            <nav className="flex items-center gap-5 text-sm font-semibold text-white">
+            <nav className="flex items-center gap-5 text-sm font-semibold text-white!">
               <Link
-                href={ROUTES.MY_ID}
+                href={ROUTES.WALLET}
                 className="flex items-center gap-1.5 text-white/90! hover:text-white! transition-colors py-1 group"
               >
-                <WalletOutlined className="text-base text-amber-300 group-hover:scale-110 transition-transform" />
+                <WalletOutlined className="text-base text-amber-300! group-hover:scale-110 transition-transform" />
                 <span>Wallet</span>
               </Link>
 
@@ -99,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
                 href="#offers"
                 className="flex items-center gap-1.5 text-white/90! hover:text-white! transition-colors py-1 group"
               >
-                <ShoppingOutlined className="text-base text-emerald-300 group-hover:scale-110 transition-transform" />
+                <ShoppingOutlined className="text-base text-emerald-300! group-hover:scale-110 transition-transform" />
                 <span>Order</span>
               </a>
             </nav>

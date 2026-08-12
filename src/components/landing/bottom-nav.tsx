@@ -59,8 +59,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         </button>
 
         {/* Tab 2: Wallet */}
-        <button
-          onClick={() => handleSelectTab("wallet")}
+        <Link
+          href={ROUTES.WALLET}
+          onClick={() => setCurrentTab("wallet")}
           className={`flex flex-col items-center justify-center py-1 px-4 rounded-full transition-all ${
             currentTab === "wallet"
               ? "bg-brand-sage text-[#1e3932] font-bold shadow-2xs"
@@ -69,7 +70,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         >
           <WalletOutlined className="text-xl" />
           <span className="text-[11px] font-semibold mt-0.5">Wallet</span>
-        </button>
+        </Link>
 
         {/* Tab 3: Order */}
         <button

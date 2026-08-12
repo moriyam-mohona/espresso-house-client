@@ -66,9 +66,9 @@ export const WalletActionList: React.FC = () => {
       </Link>
 
       {/* 3. Payment Cards matching Screenshot 2 */}
-      <div
-        onClick={() => handleAction("Payment Cards Manager")}
-        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group"
+      <Link
+        href={ROUTES.PAYMENT_CARDS}
+        className="bg-white hover:bg-gray-50 rounded-2xl p-4 border border-gray-200/90 flex items-center justify-between shadow-2xs transition-all cursor-pointer group block"
       >
         <div className="flex items-center gap-4">
           <div className="h-11 w-11 rounded-full bg-[#e8efe6] text-[#1e3932] flex items-center justify-center text-lg">
@@ -84,7 +84,7 @@ export const WalletActionList: React.FC = () => {
             </p>
           </div>
         </div>
-      </div>
+      </Link>
 
       {/* 4. Receipts matching Screenshot 2 */}
       <div

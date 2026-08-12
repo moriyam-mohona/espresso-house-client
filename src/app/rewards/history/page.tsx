@@ -21,7 +21,7 @@ export default function PointsHistoryPage() {
   return (
     <div className="min-h-screen bg-gray-50/50 text-gray-900 font-sans flex flex-col justify-between">
       {/* Top Header Bar matching Screenshot */}
-      <header className="sticky top-0 z-30 bg-[#e8efe6] px-4 py-3 border-b border-[#d6e3d3]/80">
+      <header className="sticky top-0 z-30 bg-brand-sage px-4 py-3 border-b border-[#d6e3d3]/80">
         <div className="mx-auto max-w-md md:max-w-xl flex items-center justify-between">
           <Link
             href={ROUTES.REWARDS}
@@ -38,7 +38,7 @@ export default function PointsHistoryPage() {
           {/* Quick toggle between Empty State (screenshot default) and Populated state */}
           <button
             onClick={() => setIsDemoEmpty(!isDemoEmpty)}
-            className="flex items-center gap-1 text-[11px] font-bold bg-[#1e3932] text-white px-3 py-1.5 rounded-full hover:bg-[#2d5349] transition-colors"
+            className="flex items-center gap-1 text-[11px] font-bold bg-[#1e3932] text-white px-3 py-1.5 rounded-full hover:bg-primary transition-colors"
             title="Toggle between Empty state and Populated state"
           >
             <PlusCircleOutlined />
@@ -108,7 +108,7 @@ export default function PointsHistoryPage() {
           <>
             {isDemoEmpty || availablePoints === 0 ? (
               /* Empty State matching Screenshot exactly */
-              <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs text-center my-4 flex flex-col items-center justify-center min-h-[300px]">
+              <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs text-center my-4 flex flex-col items-center justify-center min-h-75">
                 {/* Circular Outline Star Icon */}
                 <div className="h-16 w-16 rounded-full border-2 border-gray-800 flex items-center justify-center mb-6">
                   <StarOutlined className="text-3xl text-gray-800" />
@@ -124,7 +124,7 @@ export default function PointsHistoryPage() {
                 <div className="mt-8">
                   <Link
                     href={ROUTES.HOME}
-                    className="inline-block bg-[#1e3932] hover:bg-[#2d5349] text-white px-6 py-2.5 rounded-full text-xs font-bold transition-all shadow-xs"
+                    className="inline-block bg-[#1e3932] hover:bg-primary text-white px-6 py-2.5 rounded-full text-xs font-bold transition-all shadow-xs"
                   >
                     Explore Menu & Order
                   </Link>
@@ -133,7 +133,7 @@ export default function PointsHistoryPage() {
             ) : (
               /* Populated State */
               <div className="space-y-4">
-                <div className="bg-[#e8efe6] p-5 rounded-2xl border border-[#d6e3d3] flex items-center justify-between">
+                <div className="bg-brand-sage p-5 rounded-2xl border border-[#d6e3d3] flex items-center justify-between">
                   <div>
                     <h3 className="font-bold text-[#16302b]">Gold Member Account</h3>
                     <p className="text-xs text-gray-600">Points collected are valid for 6 months</p>
@@ -165,7 +165,7 @@ export default function PointsHistoryPage() {
 
         {/* Render Tab 1: Expiring */}
         {activeTab === "expiring" && (
-          <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs text-center my-4 flex flex-col items-center justify-center min-h-[300px]">
+          <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/80 shadow-xs text-center my-4 flex flex-col items-center justify-center min-h-75">
             <div className="h-16 w-16 rounded-full border-2 border-emerald-800 flex items-center justify-center mb-6 bg-emerald-50">
               <CheckCircleOutlined className="text-3xl text-emerald-800" />
             </div>

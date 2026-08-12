@@ -57,10 +57,10 @@ export default function LandingPage() {
       </main>
 
       {/* Desktop Footer */}
-      <footer className="hidden md:block bg-[#16302b] text-emerald-100/80 border-t border-[#2d5349] py-8 px-6 text-xs">
+      <footer className="hidden md:block bg-[#16302b] text-emerald-100/80 border-t border-primary-hover py-8 px-6 text-xs">
         <div className="mx-auto max-w-5xl flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="h-7 w-7 rounded-full bg-[#e8efe6] text-[#1e3932] font-black flex items-center justify-center text-xs">
+            <div className="h-7 w-7 rounded-full bg-brand-sage text-[#1e3932] font-black flex items-center justify-center text-xs">
               EH
             </div>
             <span className="font-bold text-white text-sm">{siteConfig.name}</span>

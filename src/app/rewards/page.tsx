@@ -58,9 +58,9 @@ export default function RewardsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#e8efe6] text-gray-900 font-sans flex flex-col justify-between">
+    <div className="min-h-screen bg-brand-sage text-gray-900 font-sans flex flex-col justify-between">
       {/* Top Header Bar matching Screenshot 1 */}
-      <header className="sticky top-0 z-30 bg-[#e8efe6] px-4 py-3 border-b border-[#d6e3d3]/80">
+      <header className="sticky top-0 z-30 bg-brand-sage px-4 py-3 border-b border-[#d6e3d3]/80">
         <div className="mx-auto max-w-md md:max-w-4xl flex items-center justify-between">
           <Link
             href={ROUTES.HOME}
@@ -112,7 +112,7 @@ export default function RewardsPage() {
             {/* Quick Points Switcher Button for Demo Testing */}
             <button
               onClick={handleTogglePointsDemo}
-              className="text-[11px] font-bold bg-[#1e3932] text-white px-3 py-1.5 rounded-full hover:bg-[#2d5349] transition-colors shadow-2xs flex items-center gap-1"
+              className="text-[11px] font-bold bg-[#1e3932] text-white px-3 py-1.5 rounded-full hover:bg-primary transition-colors shadow-2xs flex items-center gap-1"
               title="Click to toggle demo points balance"
             >
               <PlusCircleOutlined />
@@ -121,7 +121,7 @@ export default function RewardsPage() {
           </div>
 
           {/* Catalog Section Card Container matching Screenshot 1 */}
-          <div className="bg-white rounded-t-3xl min-h-[500px] p-5 sm:p-8 shadow-md border-t border-gray-100">
+          <div className="bg-white rounded-t-3xl min-h-125 p-5 sm:p-8 shadow-md border-t border-gray-100">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16302b] mb-5 tracking-tight">
               Expresso for you
             </h2>
@@ -135,7 +135,7 @@ export default function RewardsPage() {
                   className="bg-white rounded-2xl overflow-hidden border border-gray-200/90 hover:border-[#1e3932] shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer group flex flex-col justify-between"
                 >
                   {/* Image Container matching Screenshot 1 */}
-                  <div className="relative h-36 sm:h-44 w-full bg-[#f4f6f0] overflow-hidden">
+                  <div className="relative h-36 sm:h-44 w-full bg-brand-cream overflow-hidden">
                     <Image
                       src={reward.imageSrc}
                       alt={reward.title}
@@ -210,7 +210,7 @@ export default function RewardsPage() {
           <div className="mt-6 pt-2">
             <button
               onClick={() => setShowEarnInfoModal(false)}
-              className="w-full bg-[#1e3932] hover:bg-[#2d5349] text-white py-3 rounded-full font-bold text-sm shadow-sm transition-all"
+              className="w-full bg-[#1e3932] hover:bg-primary text-white py-3 rounded-full font-bold text-sm shadow-sm transition-all"
             >
               Close
             </button>
@@ -288,7 +288,7 @@ export default function RewardsPage() {
                 disabled={userPoints < selectedReward.pointsCost}
                 className={`w-full py-3.5 rounded-2xl font-bold text-sm transition-all shadow-xs ${
                   userPoints >= selectedReward.pointsCost
-                    ? "bg-[#1e3932] hover:bg-[#2d5349] text-white active:scale-98"
+                    ? "bg-[#1e3932] hover:bg-primary text-white active:scale-98"
                     : "bg-[#9db2a8] text-white cursor-not-allowed"
                 }`}
               >

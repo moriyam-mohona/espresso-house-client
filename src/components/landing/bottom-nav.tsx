@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
   HomeFilled,
   WalletOutlined,
@@ -9,16 +10,16 @@ import {
   QrcodeOutlined,
 } from "@ant-design/icons";
 import { Badge, Drawer, App } from "antd";
+import { ROUTES } from "@/constants/routes";
 
 interface BottomNavProps {
-  onOpenMyId: () => void;
+  onOpenMyId?: () => void;
   activeTab?: string;
   onTabChange?: (tab: string) => void;
   walletBalance?: number;
 }
 
 export const BottomNav: React.FC<BottomNavProps> = ({
-  onOpenMyId,
   activeTab = "start",
   onTabChange,
   walletBalance = 24.5,
@@ -49,7 +50,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           onClick={() => handleSelectTab("start")}
           className={`flex flex-col items-center justify-center py-1 px-4 rounded-full transition-all ${
             currentTab === "start"
-              ? "bg-[#e8efe6] text-[#1e3932] font-bold shadow-2xs"
+              ? "bg-brand-sage text-[#1e3932] font-bold shadow-2xs"
               : "text-gray-500 hover:text-[#1e3932]"
           }`}
         >
@@ -62,7 +63,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           onClick={() => handleSelectTab("wallet")}
           className={`flex flex-col items-center justify-center py-1 px-4 rounded-full transition-all ${
             currentTab === "wallet"
-              ? "bg-[#e8efe6] text-[#1e3932] font-bold shadow-2xs"
+              ? "bg-brand-sage text-[#1e3932] font-bold shadow-2xs"
               : "text-gray-500 hover:text-[#1e3932]"
           }`}
         >
@@ -75,7 +76,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           onClick={() => handleSelectTab("order")}
           className={`flex flex-col items-center justify-center py-1 px-4 rounded-full transition-all ${
             currentTab === "order"
-              ? "bg-[#e8efe6] text-[#1e3932] font-bold shadow-2xs"
+              ? "bg-brand-sage text-[#1e3932] font-bold shadow-2xs"
               : "text-gray-500 hover:text-[#1e3932]"
           }`}
         >
@@ -90,7 +91,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           onClick={() => handleSelectTab("more")}
           className={`flex flex-col items-center justify-center py-1 px-4 rounded-full transition-all ${
             currentTab === "more"
-              ? "bg-[#e8efe6] text-[#1e3932] font-bold shadow-2xs"
+              ? "bg-brand-sage text-[#1e3932] font-bold shadow-2xs"
               : "text-gray-500 hover:text-[#1e3932]"
           }`}
         >
@@ -109,19 +110,17 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         title={<span className="font-extrabold text-[#16302b]">Espresso House Menu</span>}
       >
         <div className="space-y-3 pb-6">
-          <button
-            onClick={() => {
-              setDrawerOpen(false);
-              onOpenMyId();
-            }}
-            className="w-full flex items-center justify-between p-3.5 bg-[#e8efe6] text-[#1e3932] rounded-2xl font-bold"
+          <Link
+            href={ROUTES.MY_ID}
+            onClick={() => setDrawerOpen(false)}
+            className="w-full flex items-center justify-between p-3.5 bg-brand-sage text-[#1e3932] rounded-2xl font-bold"
           >
             <div className="flex items-center gap-3">
               <QrcodeOutlined className="text-xl" />
               <span>Show My ID (QR Code)</span>
             </div>
             <span className="text-xs bg-[#1e3932] text-white px-2.5 py-1 rounded-full">Scan</span>
-          </button>
+          </Link>
 
           <a href="#offers" onClick={() => setDrawerOpen(false)} className="block p-3 text-[#16302b] font-semibold border-b border-gray-100">
             🏷️ All Expresso Offers

@@ -54,7 +54,7 @@ export const HeroCarousel: React.FC<{ onTryHereClick?: () => void }> = ({ onTryH
 
   return (
     <div className="mx-4 md:mx-auto md:max-w-5xl my-6">
-      <div className="relative overflow-hidden rounded-3xl h-[380px] sm:h-[440px] shadow-lg group">
+      <div className="relative overflow-hidden rounded-3xl h-95 sm:h-110 shadow-lg group">
         {/* Slide Image Background */}
         <Image
           src={slide.imageSrc}
@@ -66,12 +66,12 @@ export const HeroCarousel: React.FC<{ onTryHereClick?: () => void }> = ({ onTryH
         />
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/40 to-black/20" />
 
         {/* Top Badge */}
         {slide.badge && (
           <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10">
-            <span className="bg-[#e8efe6] text-[#1e3932] text-xs font-extrabold px-3 py-1 rounded-full shadow-xs tracking-wide uppercase">
+            <span className="bg-brand-sage text-[#1e3932] text-xs font-extrabold px-3 py-1 rounded-full shadow-xs tracking-wide uppercase">
               {slide.badge}
             </span>
           </div>

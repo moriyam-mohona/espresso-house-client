@@ -2,16 +2,18 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { QrcodeOutlined, UserOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import { Badge, Dropdown, MenuProps } from "antd";
 import { siteConfig } from "@/config/site";
+import { ROUTES } from "@/constants/routes";
 
 interface HeaderProps {
-  onOpenMyId: () => void;
+  onOpenMyId?: () => void;
   userPoints?: number;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenMyId, userPoints = 142 }) => {
+export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
   const profileMenuItems: MenuProps["items"] = [
     { key: "profile", label: "My Profile & Account" },
     { key: "orders", label: "Order History" },
@@ -37,13 +39,13 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMyId, userPoints = 142 }) 
 
         <div className="flex items-center gap-4">
           {/* My ID QR Code Button */}
-          <button
-            onClick={onOpenMyId}
-            className="flex flex-col items-center justify-center text-white hover:text-emerald-200 transition-colors"
+          <Link
+            href={ROUTES.MY_ID}
+            className="flex flex-col items-center justify-center text-white! hover:text-emerald-200 transition-colors"
           >
             <QrcodeOutlined className="text-2xl" />
             <span className="text-[10px] font-medium tracking-tight mt-0.5">My ID</span>
-          </button>
+          </Link>
 
           {/* Profile Icon with badge */}
           <Dropdown menu={{ items: profileMenuItems }} placement="bottomRight" trigger={['click']}>
@@ -58,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMyId, userPoints = 142 }) 
       </div>
 
       {/* Desktop Navigation Header */}
-      <div className="hidden md:block bg-[#1e3932] text-white border-b border-[#2d5349]">
+      <div className="hidden md:block bg-[#1e3932] text-white border-b border-primary">
         <div className="mx-auto max-w-6xl px-6 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-2.5">
@@ -69,33 +71,33 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMyId, userPoints = 142 }) 
             </div>
 
             {/* Store selector shortcut */}
-            <div className="flex items-center gap-2 bg-[#2d5349]/80 px-3 py-1.5 rounded-full text-xs text-emerald-100 hover:bg-[#2d5349] transition-colors cursor-pointer">
+            <div className="flex items-center gap-2 bg-primary/80 px-3 py-1.5 rounded-full text-xs text-emerald-100 hover:bg-primary transition-colors cursor-pointer">
               <EnvironmentOutlined className="text-emerald-300" />
               <span>Central Station Branch • Open until 10:00 PM</span>
             </div>
           </div>
 
           <div className="flex items-center gap-6">
-            <nav className="flex items-center gap-6 text-sm font-medium text-emerald-100/90">
-              <a href="#offers" className="hover:text-white transition-colors">Offers</a>
-              <a href="#fika-fun" className="hover:text-white transition-colors">Fika Fun</a>
-              <a href="#menu" className="hover:text-white transition-colors">Menu</a>
-              <a href="#stores" className="hover:text-white transition-colors">Stores</a>
+            <nav className="flex items-center gap-6 text-sm font-medium text-white!">
+              <a href="#offers" className="text-white! hover:text-white transition-colors">Offers</a>
+              <a href="#fika-fun" className="text-white! hover:text-white transition-colors">Fika Fun</a>
+              <a href="#menu" className="text-white! hover:text-white transition-colors">Menu</a>
+              <a href="#stores" className="text-white! hover:text-white transition-colors">Stores</a>
             </nav>
 
-            <div className="h-5 w-[1px] bg-emerald-700/60" />
+            <div className="h-5 w-px bg-emerald-700/60" />
 
             <div className="flex items-center gap-3">
-              <button
-                onClick={onOpenMyId}
-                className="flex items-center gap-2 bg-[#e8efe6] text-[#1e3932] px-3.5 py-1.5 rounded-full text-xs font-bold hover:bg-white transition-all shadow-xs"
+              <Link
+                href={ROUTES.MY_ID}
+                className="flex items-center gap-2 bg-brand-sage!  text-[#1e3932] px-3.5 py-1.5 rounded-full text-xs font-bold hover:bg-white transition-all shadow-xs"
               >
                 <QrcodeOutlined className="text-base" />
                 <span>My ID (QR)</span>
-              </button>
+              </Link>
 
               <Dropdown menu={{ items: profileMenuItems }} placement="bottomRight" trigger={['click']}>
-                <button className="flex items-center gap-2 bg-[#2d5349] hover:bg-[#39695d] px-3.5 py-1.5 rounded-full text-xs font-medium text-white transition-all">
+                <button className="flex items-center gap-2 bg-primary!  text-white! px-3.5 py-1.5 rounded-full text-xs font-medium hover:bg-[#39695d] transition-all">
                   <UserOutlined className="text-emerald-300" />
                   <span>My Profile</span>
                 </button>

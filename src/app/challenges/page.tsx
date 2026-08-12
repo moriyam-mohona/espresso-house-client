@@ -33,9 +33,9 @@ export default function ChallengesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#e8efe6] text-gray-900 font-sans flex flex-col justify-between">
+    <div className="min-h-screen bg-brand-sage text-gray-900 font-sans flex flex-col justify-between">
       {/* Top Header Bar matching Screenshot Flow */}
-      <header className="sticky top-0 z-30 bg-[#e8efe6] px-4 py-3 border-b border-[#d6e3d3]/80">
+      <header className="sticky top-0 z-30 bg-brand-sage px-4 py-3 border-b border-[#d6e3d3]/80">
         <div className="mx-auto max-w-md md:max-w-xl flex items-center justify-between">
           <Link
             href={ROUTES.HOME}
@@ -84,7 +84,7 @@ export default function ChallengesPage() {
           </div>
 
           {/* Fika Fun Section Container matching Screen 1 & Screen 2 */}
-          <div className="bg-white rounded-t-3xl min-h-[480px] p-5 sm:p-6 shadow-md border-t border-gray-100">
+          <div className="bg-white rounded-t-3xl min-h-120 p-5 sm:p-6 shadow-md border-t border-gray-100">
             <h2 className="text-xl sm:text-2xl font-extrabold text-[#16302b] mb-4 tracking-tight">
               Fika Fun
             </h2>
@@ -125,7 +125,7 @@ export default function ChallengesPage() {
                     <div
                       key={challenge.id}
                       onClick={() => setSelectedChallenge(challenge)}
-                      className="bg-[#f4f6f0] hover:bg-white transition-all duration-200 rounded-2xl p-4 sm:p-5 border border-[#d2dec0] shadow-xs cursor-pointer group"
+                      className="bg-brand-cream hover:bg-white transition-all duration-200 rounded-2xl p-4 sm:p-5 border border-[#d2dec0] shadow-xs cursor-pointer group"
                     >
                       {/* Top Row: Tag & Points */}
                       <div className="flex items-center justify-between mb-2">
@@ -249,7 +249,7 @@ export default function ChallengesPage() {
         >
           <div className="text-[#16302b]">
             {/* Top Sage Header matching Screen 3 */}
-            <div className="bg-[#e8efe6] p-6 text-center flex flex-col items-center justify-center relative border-b border-[#d6e3d3]">
+            <div className="bg-brand-sage p-6 text-center flex flex-col items-center justify-center relative border-b border-[#d6e3d3]">
               <span className="text-xs font-bold text-[#16302b] uppercase tracking-wider mb-4">
                 Description
               </span>

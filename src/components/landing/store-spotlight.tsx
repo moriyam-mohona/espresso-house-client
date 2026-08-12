@@ -9,7 +9,7 @@ export const StoreSpotlight: React.FC<{ onPreOrderClick?: () => void }> = ({ onP
     <div id="stores" className="mx-4 md:mx-auto md:max-w-5xl my-10">
       <div className="bg-white rounded-3xl overflow-hidden border border-gray-200/90 shadow-md grid grid-cols-1 md:grid-cols-2">
         {/* Left Image Section featuring coffee-shop.jpg */}
-        <div className="relative h-64 md:h-full min-h-[300px]">
+        <div className="relative h-64 md:h-full min-h-75">
           <Image
             src="/coffee-shop.jpg"
             alt="Espresso House Coffee Shop"
@@ -17,7 +17,7 @@ export const StoreSpotlight: React.FC<{ onPreOrderClick?: () => void }> = ({ onP
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent md:hidden" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent md:hidden" />
           <div className="absolute bottom-4 left-4 text-white md:hidden">
             <span className="bg-[#1e3932] text-xs font-bold px-3 py-1 rounded-full">
               Nearest Branch
@@ -27,10 +27,10 @@ export const StoreSpotlight: React.FC<{ onPreOrderClick?: () => void }> = ({ onP
         </div>
 
         {/* Right Details Section */}
-        <div className="p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-white to-[#f9faf8]">
+        <div className="p-6 sm:p-8 flex flex-col justify-between bg-linear-to-br from-white to-[#f9faf8]">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="bg-[#e8efe6] text-[#1e3932] text-xs font-extrabold px-3 py-1 rounded-full flex items-center gap-1.5">
+              <span className="bg-brand-sage text-[#1e3932] text-xs font-extrabold px-3 py-1 rounded-full flex items-center gap-1.5">
                 <EnvironmentOutlined className="text-emerald-700" />
                 <span>Selected Store</span>
               </span>
@@ -77,7 +77,7 @@ export const StoreSpotlight: React.FC<{ onPreOrderClick?: () => void }> = ({ onP
           <div className="mt-8 flex flex-wrap items-center gap-3 pt-4 border-t border-gray-100">
             <button
               onClick={onPreOrderClick}
-              className="flex-1 bg-[#1e3932] hover:bg-[#2d5349] text-white px-5 py-3 rounded-2xl font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 active:scale-95"
+              className="flex-1 bg-[#1e3932] hover:bg-primary text-white px-5 py-3 rounded-2xl font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2 active:scale-95"
             >
               <ShoppingCartOutlined className="text-base" />
               <span>Pre-Order for Pickup</span>

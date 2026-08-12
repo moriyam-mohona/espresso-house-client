@@ -58,7 +58,7 @@ export const ExpressoFun: React.FC = () => {
 
   return (
     <div id="fika-fun" className="mx-4 md:mx-auto md:max-w-5xl my-6">
-      <div className="bg-[#e8efe6] rounded-2xl p-5 sm:p-6 border border-[#d6e3d3] shadow-xs relative">
+      <div className="bg-brand-sage rounded-2xl p-5 sm:p-6 border border-[#d6e3d3] shadow-xs relative">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl sm:text-2xl font-extrabold text-[#16302b] tracking-tight flex items-center gap-2">
@@ -71,7 +71,7 @@ export const ExpressoFun: React.FC = () => {
           {/* View Details link pointing to /challenges */}
           <Link
             href={ROUTES.CHALLENGES}
-            className="text-[#1e3932] hover:text-[#2d5349] p-1 transition-transform hover:translate-x-1 flex items-center gap-1 text-sm font-semibold"
+            className="text-[#1e3932] hover:text-primary-hover p-1 transition-transform hover:translate-x-1 flex items-center gap-1 text-sm font-semibold"
           >
             <span>View Details</span>
             <ArrowRightOutlined className="text-xs" />
@@ -111,7 +111,7 @@ export const ExpressoFun: React.FC = () => {
               <div
                 key={challenge.id}
                 onClick={() => setSelectedChallenge(challenge)}
-                className="snap-start shrink-0 w-[82vw] sm:w-[340px] md:w-[360px] bg-[#f4f6f0] hover:bg-white transition-all duration-200 rounded-2xl border-2 border-[#1e3932] shadow-xs cursor-pointer group relative overflow-hidden flex flex-col justify-between p-4 sm:p-5"
+                className="snap-start shrink-0 w-[82vw] sm:w-85 md:w-90 bg-brand-cream hover:bg-white transition-all duration-200 rounded-2xl border-2 border-[#1e3932] shadow-xs cursor-pointer group relative overflow-hidden flex flex-col justify-between p-4 sm:p-5"
               >
                 {/* Top-Left Tag & Top-Right Points */}
                 <div className="flex items-start justify-between w-full mb-3">
@@ -131,7 +131,7 @@ export const ExpressoFun: React.FC = () => {
                 <div className="flex items-center gap-4">
                   {/* Progress Meter Circle */}
                   <div className="relative shrink-0 flex items-center justify-center">
-                    <div className="h-16 w-16 rounded-full border-4 border-[#1e3932] flex flex-col items-center justify-center bg-[#f4f6f0] group-hover:bg-white transition-colors relative">
+                    <div className="h-16 w-16 rounded-full border-4 border-[#1e3932] flex flex-col items-center justify-center bg-brand-cream group-hover:bg-white transition-colors relative">
                       <ClockCircleOutlined className="text-xs text-[#1e3932] mb-0.5" />
                       <span className="text-xs font-extrabold text-[#1e3932]">
                         {challenge.currentProgress}/{challenge.totalRequired}
@@ -172,7 +172,7 @@ export const ExpressoFun: React.FC = () => {
         >
           <div className="text-[#16302b]">
             {/* Top Sage Header */}
-            <div className="bg-[#e8efe6] p-6 text-center flex flex-col items-center justify-center relative border-b border-[#d6e3d3]">
+            <div className="bg-brand-sage p-6 text-center flex flex-col items-center justify-center relative border-b border-[#d6e3d3]">
               <span className="text-xs font-bold text-[#16302b] uppercase tracking-wider mb-4">
                 Description
               </span>

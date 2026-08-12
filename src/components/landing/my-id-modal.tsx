@@ -33,14 +33,14 @@ export const MyIdModal: React.FC<MyIdModalProps> = ({
     >
       <div className="p-6 text-center text-white">
         {/* Header */}
-        <div className="flex items-center justify-between mb-4 border-b border-[#2d5349] pb-3">
+        <div className="flex items-center justify-between mb-4 border-b border-primary pb-3">
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-full overflow-hidden border border-[#d4a373] relative shrink-0">
               <Image src="/logo.png" alt="Espresso House Logo" fill sizes="32px" className="object-cover" />
             </div>
             <span className="font-extrabold text-lg text-white">My ID & Membership</span>
           </div>
-          <span className="bg-[#2d5349] text-emerald-200 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+          <span className="bg-primary text-emerald-200 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
             <SafetyCertificateOutlined className="text-xs" />
             <span>Gold Member</span>
           </span>
@@ -62,7 +62,7 @@ export const MyIdModal: React.FC<MyIdModalProps> = ({
 
         {/* User Stats Grid */}
         <div className="grid grid-cols-2 gap-3 my-4">
-          <div className="bg-[#2d5349]/80 p-3 rounded-xl text-center border border-emerald-600/30">
+          <div className="bg-primary/80 p-3 rounded-xl text-center border border-emerald-600/30">
             <span className="text-[11px] text-emerald-200/80 block uppercase tracking-wider font-semibold">
               Loyalty Points
             </span>
@@ -71,7 +71,7 @@ export const MyIdModal: React.FC<MyIdModalProps> = ({
             </span>
           </div>
 
-          <div className="bg-[#2d5349]/80 p-3 rounded-xl text-center border border-emerald-600/30">
+          <div className="bg-primary/80 p-3 rounded-xl text-center border border-emerald-600/30">
             <span className="text-[11px] text-emerald-200/80 block uppercase tracking-wider font-semibold">
               Digital Wallet
             </span>

@@ -154,7 +154,7 @@ export default function ReceiptsPage() {
       {/* Main Content Container */}
       <main className="flex-1 p-4 md:p-6 max-w-md md:max-w-7xl mx-auto w-full space-y-6">
         {/* Top Summary Statistics Banner */}
-        <div className="bg-gradient-to-r from-[#1e3932] via-[#24473e] to-[#2c5349] text-white rounded-3xl p-6 shadow-md relative overflow-hidden">
+        <div className="bg-linear-to-r from-[#1e3932] via-[#24473e] to-[#2c5349] text-white rounded-3xl p-6 shadow-md relative overflow-hidden">
           <div className="absolute right-0 bottom-0 opacity-10 translate-x-4 translate-y-4">
             <FileTextOutlined className="text-9xl text-white" />
           </div>
@@ -222,7 +222,7 @@ export default function ReceiptsPage() {
                 {/* Receipt Card Header */}
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="h-11 w-11 rounded-2xl bg-[#e8efe6] text-[#1e3932] flex items-center justify-center text-lg group-hover:scale-105 transition-transform">
+                    <div className="h-11 w-11 rounded-2xl bg-brand-sage text-[#1e3932] flex items-center justify-center text-lg group-hover:scale-105 transition-transform">
                       <CoffeeOutlined />
                     </div>
                     <div>

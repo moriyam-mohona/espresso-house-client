@@ -10,7 +10,8 @@ import {
   WalletOutlined,
   ShoppingOutlined,
 } from "@ant-design/icons";
-import { Badge, Dropdown, MenuProps } from "antd";
+import { useRouter } from "next/navigation";
+import { App, Badge, Dropdown, MenuProps } from "antd";
 import { siteConfig } from "@/config/site";
 import { ROUTES } from "@/constants/routes";
 
@@ -20,11 +21,23 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
+  const router = useRouter();
+  const { message } = App.useApp();
+
+  const handleProfileMenuClick: MenuProps["onClick"] = (info) => {
+    if (info.key === "profile") {
+      router.push(ROUTES.PROFILE);
+    } else if (info.key === "orders") {
+      router.push(ROUTES.RECEIPTS);
+    } else if (info.key === "logout") {
+      message.success("Signed out successfully");
+      router.push(ROUTES.HOME);
+    }
+  };
+
   const profileMenuItems: MenuProps["items"] = [
     { key: "profile", label: "My Profile & Account" },
     { key: "orders", label: "Order History" },
-    { key: "wallet", label: "Digital Wallet ($24.50)" },
-    { key: "loyalty", label: `Loyalty Points (${userPoints} pts)` },
     { type: "divider" },
     { key: "logout", label: "Sign Out", danger: true },
   ];
@@ -54,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
           </Link>
 
           {/* Profile Icon with badge */}
-          <Dropdown menu={{ items: profileMenuItems }} placement="bottomRight" trigger={['click']}>
+          <Dropdown menu={{ items: profileMenuItems, onClick: handleProfileMenuClick }} placement="bottomRight" trigger={['click']}>
             <button className="flex flex-col items-center justify-center text-white hover:text-emerald-200 transition-colors relative">
               <Badge dot color="#52c41a">
                 <UserOutlined className="text-xl text-white" />
@@ -115,7 +128,7 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
                 <span>My ID (QR)</span>
               </Link>
 
-              <Dropdown menu={{ items: profileMenuItems }} placement="bottomRight" trigger={['click']}>
+              <Dropdown menu={{ items: profileMenuItems, onClick: handleProfileMenuClick }} placement="bottomRight" trigger={['click']}>
          <button className="flex items-center gap-2 bg-primary-hover hover:bg-[#39695d] px-3.5 py-1.5 rounded-full text-xs font-medium text-white transition-all">
                   <UserOutlined className="text-emerald-300" />
                   <span>My Profile</span>

@@ -13,6 +13,8 @@ export const ROUTES = {
   SEND_GIFT: "/wallet/send-gift",
   FIKA_OFFERS: "/wallet/offers",
   RECEIPTS: "/wallet/receipts",
+  ORDERS: "/wallet/receipts",
+  PROFILE: "/profile",
   ORDER: "/order",
   // Authentication route placeholders
   AUTH: {

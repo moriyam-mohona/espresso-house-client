@@ -580,7 +580,7 @@ export default function CheckoutPage() {
 
             <button
               onClick={() => setCancelModalOpen(false)}
-              className="w-full bg-white hover:bg-gray-50 text-gray-800 py-3.5 rounded-full font-extrabold text-sm border border-[#1e3932] text-[#1e3932] transition-all cursor-pointer active:scale-95"
+              className="w-full bg-white hover:bg-gray-50 text-gray-800 py-3.5 rounded-full font-extrabold text-sm border border-[#1e3932] transition-all cursor-pointer active:scale-95"
             >
               No
             </button>

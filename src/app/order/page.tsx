@@ -8,7 +8,6 @@ import {
   CloseOutlined,
   SearchOutlined,
   CompassOutlined,
-  RightOutlined,
   StarFilled,
   EnvironmentOutlined,
   HeartOutlined,
@@ -117,9 +116,9 @@ export default function OrderPage() {
       </header>
 
       {/* Main Store Locator Body */}
-      <main className="flex-1 max-w-7xl mx-auto w-full p-4 sm:px-6 lg:px-8 pb-16">
+      <main className="flex-1 max-w-7xl mx-auto w-full p-4  pb-16">
         {/* Top Banner / Store Locator Intro */}
-        <div className="mb-4 bg-gradient-to-r from-[#1e3932] via-[#2d5349] to-[#142722] text-white rounded-3xl p-5 sm:p-6 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mb-4 bg-linear-to-r from-[#1e3932] via-primary-hover to-[#142722] text-white rounded-3xl p-5 sm:p-6 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="space-y-1 text-center md:text-left">
             <span className="bg-white/20 text-emerald-100 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
               📍 Store Locator
@@ -154,7 +153,7 @@ export default function OrderPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 allowClear
-                className="rounded-2xl py-2.5 px-4 bg-gray-100/80 border-gray-200 text-sm focus:bg-white"
+                className="rounded-2xl py-2.5 px-4 bg-gray-100/80 border-gray-200 text-sm"
               />
 
               {/* Tab Switcher Pills */}
@@ -184,7 +183,7 @@ export default function OrderPage() {
             </div>
 
             {/* Branch Cards Scroll Area */}
-            <div className="space-y-3 max-h-[620px] overflow-y-auto pr-1">
+            <div className="space-y-3 max-h-130 overflow-y-auto pr-1">
               {filteredBranches.length === 0 ? (
                 <div className="bg-white p-8 rounded-3xl border border-gray-200 text-center space-y-2">
                   <EnvironmentOutlined className="text-3xl text-gray-300" />
@@ -267,7 +266,7 @@ export default function OrderPage() {
 
           {/* Right Column: Styled Interactive Map Viewport (7 cols desktop) */}
           <div className="lg:col-span-7">
-            <div className="relative rounded-3xl overflow-hidden shadow-lg border border-gray-200/90 h-[520px] lg:h-[680px] bg-[#d0e3ec] flex flex-col">
+            <div className="relative rounded-3xl overflow-hidden shadow-lg border border-gray-200/90 h-130 lg:h-170 bg-[#d0e3ec] flex flex-col">
               {/* Background Styled Map Pattern */}
               <div
                 className="absolute inset-0 bg-cover bg-center opacity-90"
@@ -371,7 +370,7 @@ export default function OrderPage() {
               <button
                 onClick={handleGetLocation}
                 disabled={isLocating}
-                className="absolute top-16 right-4 z-20 h-11 w-11 rounded-full bg-[#1e3932] text-white flex items-center justify-center text-lg shadow-xl hover:bg-[#2d5349] transition-all cursor-pointer active:scale-95"
+                className="absolute top-16 right-4 z-20 h-11 w-11 rounded-full bg-[#1e3932] text-white flex items-center justify-center text-lg shadow-xl hover:bg-primary-hover transition-all cursor-pointer active:scale-95"
                 title="My Location"
               >
                 <CompassOutlined className={isLocating ? "animate-spin" : ""} />

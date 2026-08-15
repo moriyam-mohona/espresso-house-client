@@ -102,13 +102,23 @@ export const offersList: Offer[] = [
   },
 ];
 
-export const ExpressoOffers: React.FC = () => {
+interface ExpressoOffersProps {
+  onActivateOffer?: (offer: Offer, isActivated: boolean) => void;
+  externalActivatedOffers?: Record<string, boolean>;
+}
+
+export const ExpressoOffers: React.FC<ExpressoOffersProps> = ({
+  onActivateOffer,
+  externalActivatedOffers,
+}) => {
   const { message } = App.useApp();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState<boolean>(false);
   const [canScrollRight, setCanScrollRight] = useState<boolean>(true);
-  const [activatedOffers, setActivatedOffers] = useState<Record<string, boolean>>({});
+  const [internalActivatedOffers, setInternalActivatedOffers] = useState<Record<string, boolean>>({});
   const [selectedOfferModal, setSelectedOfferModal] = useState<Offer | null>(null);
+
+  const activatedOffers = externalActivatedOffers || internalActivatedOffers;
 
   // Check scroll position to toggle Left / Right arrows
   const checkScrollPosition = () => {
@@ -142,13 +152,19 @@ export const ExpressoOffers: React.FC = () => {
 
   const handleActivate = (offer: Offer, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    const isCurrentlyActivated = activatedOffers[offer.id];
-    setActivatedOffers((prev) => ({
-      ...prev,
-      [offer.id]: !isCurrentlyActivated,
-    }));
+    const isCurrentlyActivated = !!activatedOffers[offer.id];
+    const newActiveState = !isCurrentlyActivated;
 
-    if (!isCurrentlyActivated) {
+    if (onActivateOffer) {
+      onActivateOffer(offer, newActiveState);
+    } else {
+      setInternalActivatedOffers((prev) => ({
+        ...prev,
+        [offer.id]: newActiveState,
+      }));
+    }
+
+    if (newActiveState) {
       message.success(`🎉 Offer "${offer.title}" activated! Show your My ID at checkout.`);
     } else {
       message.info("Offer deactivated.");

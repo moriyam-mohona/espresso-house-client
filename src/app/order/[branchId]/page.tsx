@@ -3,22 +3,19 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import {
-  CloseOutlined,
   LeftOutlined,
   RightOutlined,
   CheckCircleOutlined,
   StarFilled,
   EnvironmentOutlined,
   ClockCircleOutlined,
-  ShoppingOutlined,
 } from "@ant-design/icons";
 import { ROUTES } from "@/constants/routes";
 import { getBranchById } from "@/data/branches";
 
 export default function BranchDetailPage() {
-  const router = useRouter();
   const params = useParams();
   const branchId = (params?.branchId as string) || "br-1";
   const branch = getBranchById(branchId);

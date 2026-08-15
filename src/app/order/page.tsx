@@ -2,747 +2,384 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   CloseOutlined,
-  LeftOutlined,
   SearchOutlined,
   CompassOutlined,
-  InfoCircleOutlined,
   RightOutlined,
-  PlusOutlined,
-  ShoppingOutlined,
-  CheckCircleOutlined,
+  StarFilled,
+  EnvironmentOutlined,
+  HeartOutlined,
+  HeartFilled,
 } from "@ant-design/icons";
 import { App, Input } from "antd";
 import { ROUTES } from "@/constants/routes";
-
-interface Branch {
-  id: string;
-  name: string;
-  address: string;
-  city: string;
-  country: string;
-  distance: string;
-  hours: string;
-  lat: number;
-  lng: number;
-  amenities: string[];
-}
-
-const mockBranches: Branch[] = [
-  {
-    id: "br-1",
-    name: "Isomyy",
-    address: "Shopping centre Iso Myy, Kauppakatu 26",
-    city: "80100 Joensuu",
-    country: "Finland",
-    distance: "1.2 km",
-    hours: "09:00 - 19:00",
-    lat: 62.601,
-    lng: 29.763,
-    amenities: ["Wifi", "Child-Friendly", "Express Checkout"],
-  },
-  {
-    id: "br-2",
-    name: "Iso Kristiina",
-    address: "Kaivokatu 5 B",
-    city: "53100 Lappeenranta",
-    country: "Finland",
-    distance: "3.5 km",
-    hours: "08:00 - 19:30",
-    lat: 61.058,
-    lng: 28.188,
-    amenities: ["Wifi", "Outdoor Seating", "Express Checkout"],
-  },
-  {
-    id: "br-3",
-    name: "Pasaati",
-    address: "Keskuskatu 10",
-    city: "48100 Kotka",
-    country: "Finland",
-    distance: "5.8 km",
-    hours: "09:00 - 20:00",
-    lat: 60.466,
-    lng: 26.946,
-    amenities: ["Wifi", "Child-Friendly"],
-  },
-  {
-    id: "br-4",
-    name: "Espresso Club Sergelstorg",
-    address: "Sergelstorg 14",
-    city: "111 57 Stockholm",
-    country: "Sweden",
-    distance: "0.8 km",
-    hours: "07:00 - 21:00",
-    lat: 59.332,
-    lng: 18.064,
-    amenities: ["Wifi", "Child-Friendly", "Express Checkout"],
-  },
-  {
-    id: "br-5",
-    name: "Espresso Club Drottninggatan",
-    address: "Drottninggatan 71",
-    city: "111 36 Stockholm",
-    country: "Sweden",
-    distance: "1.4 km",
-    hours: "07:30 - 20:30",
-    lat: 59.336,
-    lng: 18.059,
-    amenities: ["Wifi", "Express Checkout"],
-  },
-];
-
-interface ProductItem {
-  id: string;
-  name: string;
-  price: number;
-  category: string;
-  subCategory: string;
-  imageSrc: string;
-}
-
-const mockProducts: ProductItem[] = [
-  {
-    id: "p1",
-    name: "Peach Please Frapino",
-    price: 78,
-    category: "Barista's Choice",
-    subCategory: "Seasonal Favourites",
-    imageSrc: "/frapino_passion.png",
-  },
-  {
-    id: "p2",
-    name: "Iced Salted Caramel Cold Brew",
-    price: 65,
-    category: "Barista's Choice",
-    subCategory: "Seasonal Favourites",
-    imageSrc: "/iced_offer.png",
-  },
-  {
-    id: "p3",
-    name: "Peach Please Frapino & Cinnamon Roll",
-    price: 95,
-    category: "App deals",
-    subCategory: "Combos",
-    imageSrc: "/frapino_passion.png",
-  },
-  {
-    id: "p4",
-    name: "Double Espresso Shot & Croissant",
-    price: 58,
-    category: "App deals",
-    subCategory: "Combos",
-    imageSrc: "/espresso_shot.png",
-  },
-  {
-    id: "p5",
-    name: "Peach Please Frapino",
-    price: 78,
-    category: "Cold drinks",
-    subCategory: "Drink Of The Month",
-    imageSrc: "/frapino_passion.png",
-  },
-  {
-    id: "p6",
-    name: "Passion Fruit Refresher",
-    price: 68,
-    category: "Cold drinks",
-    subCategory: "Drink Of The Month",
-    imageSrc: "/iced_offer.png",
-  },
-];
+import { mockBranches, Branch } from "@/data/branches";
 
 export default function OrderPage() {
   const router = useRouter();
   const { message } = App.useApp();
 
-  // Page Step: "map-select" | "branch-detail" | "menu"
-  const [step, setStep] = useState<"map-select" | "branch-detail" | "menu">("map-select");
-  const [branchTab, setBranchTab] = useState<"nearby" | "latest">("nearby");
+  const [branchTab, setBranchTab] = useState<"nearby" | "favorites">("nearby");
   const [selectedBranch, setSelectedBranch] = useState<Branch>(mockBranches[0]);
+  const [favoriteBranches, setFavoriteBranches] = useState<string[]>(["br-1"]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isLocating, setIsLocating] = useState<boolean>(false);
 
-  // Menu Screen State
-  const [activeCategory, setActiveCategory] = useState<string>("Barista's Choice");
-  const [cart, setCart] = useState<Record<string, number>>({});
-
-  const filteredBranches = mockBranches.filter(
-    (b) =>
+  // Filtered Branches based on Search
+  const filteredBranches = mockBranches.filter((b) => {
+    const matchesSearch =
       b.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       b.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      b.city.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+      b.city.toLowerCase().includes(searchQuery.toLowerCase());
+
+    if (branchTab === "favorites") {
+      return matchesSearch && favoriteBranches.includes(b.id);
+    }
+    return matchesSearch;
+  });
+
+  const toggleFavorite = (branchId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setFavoriteBranches((prev) =>
+      prev.includes(branchId) ? prev.filter((id) => id !== branchId) : [...prev, branchId]
+    );
+    message.success(
+      favoriteBranches.includes(branchId) ? "Removed from favorites" : "Added to favorite coffee shops! ❤️"
+    );
+  };
 
   const handleGetLocation = () => {
     setIsLocating(true);
-    message.loading({ content: "Getting your current location...", key: "loc" });
+    message.loading({ content: "Locating nearest Espresso House...", key: "loc" });
 
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        () => {
-          setIsLocating(false);
-          message.success({ content: "📍 Location found! Showing nearest coffee shops.", key: "loc" });
-        },
-        () => {
-          setIsLocating(false);
-          message.success({ content: "📍 Located: Stockholm Center (Mock Coordinates).", key: "loc" });
-        }
-      );
-    } else {
+    setTimeout(() => {
       setIsLocating(false);
-      message.success({ content: "📍 Located: Stockholm Center.", key: "loc" });
+      message.success({
+        content: "📍 Located! Showing nearest shops in Joensuu & Stockholm.",
+        key: "loc",
+      });
+    }, 800);
+  };
+
+  const handleNavigateToBranch = (branch: Branch, routeType: "detail" | "menu") => {
+    if (routeType === "menu") {
+      router.push(`/order/${branch.id}/menu`);
+    } else {
+      router.push(`/order/${branch.id}`);
     }
   };
 
-  const handleSelectBranch = (branch: Branch, targetStep: "branch-detail" | "menu") => {
-    setSelectedBranch(branch);
-    setStep(targetStep);
-  };
-
-  const handleAddToCart = (productId: string) => {
-    setCart((prev) => ({
-      ...prev,
-      [productId]: (prev[productId] || 0) + 1,
-    }));
-    message.success("Added item to order!");
-  };
-
-  const totalCartCount = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
-  const totalCartPrice = Object.entries(cart).reduce((sum, [id, qty]) => {
-    const p = mockProducts.find((item) => item.id === id);
-    return sum + (p ? p.price * qty : 0);
-  }, 0);
-
   return (
-    <div className="min-h-screen bg-[#f7f8f6] text-gray-900 font-sans flex flex-col justify-between">
-      {/* ==============================================================================
-          SCREEN 1: Select Coffee Shop (Map + Location Drawer matching Screenshot 1)
-         ============================================================================== */}
-      {step === "map-select" && (
-        <div className="flex-1 flex flex-col min-h-screen">
-          {/* Consistent Top Header Bar matching other pages */}
-          <header className="sticky top-0 z-30 bg-white border-b border-gray-200/80 shadow-2xs">
-            <div className="mx-auto max-w-md md:max-w-7xl px-4 py-3 flex items-center justify-between">
-              <button
-                onClick={() => router.push(ROUTES.HOME)}
-                className="h-9 w-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 transition-colors cursor-pointer border border-gray-200/80"
-              >
-                <CloseOutlined className="text-sm" />
-              </button>
+    <div className="min-h-screen bg-[#f7f8f6] text-gray-900 font-sans flex flex-col justify-between selection:bg-brand-sage selection:text-[#1e3932]">
+      {/* Step Indicator Header Bar */}
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/80 shadow-2xs">
+        <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Link
+              href={ROUTES.HOME}
+              className="h-9 w-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 transition-all cursor-pointer border border-gray-200/80 active:scale-95"
+              aria-label="Go Back to Home"
+            >
+              <CloseOutlined className="text-xs" />
+            </Link>
 
-              <h1 className="text-base sm:text-lg font-extrabold text-[#16302b]">
-                Select coffee shop
+            <div>
+              <h1 className="text-base sm:text-lg font-extrabold text-[#16302b] flex items-center gap-2">
+                <span>Espresso Club Pre-Order</span>
+                <span className="hidden sm:inline-block bg-brand-sage text-[#1e3932] text-[11px] font-black px-2.5 py-0.5 rounded-full">
+                  Fika Express
+                </span>
               </h1>
-
-              <div className="w-9" />
+              <p className="text-[11px] text-gray-500 font-medium">
+                Step 1 of 3: Select Coffee Shop Location
+              </p>
             </div>
-          </header>
+          </div>
 
-          {/* Main Layout Container matching max-w-7xl margin alignments */}
-          <main className="flex-1 max-w-md md:max-w-7xl mx-auto w-full p-4 sm:px-6 lg:px-8 pb-12">
-            <div className="relative rounded-3xl overflow-hidden shadow-md border border-gray-200 h-[calc(100vh-140px)] min-h-[560px] flex flex-col">
-              {/* Interactive SVG Map Area */}
-              <div className="relative flex-1 bg-[#d0e3ec] overflow-hidden">
-                <div
-                  className="absolute inset-0 bg-cover bg-center opacity-85"
-                  style={{
-                    backgroundImage: "radial-gradient(#b8d4e3 2px, transparent 2px)",
-                    backgroundSize: "32px 32px",
-                  }}
-                >
-                  <svg className="w-full h-full opacity-60" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 0,200 Q 150,120 300,220 T 600,180 T 900,300 L 900,600 L 0,600 Z" fill="#a5cadc" />
-                    <path d="M 50,0 Q 200,300 400,200 T 800,500" stroke="#ffffff" strokeWidth="12" fill="none" />
-                    <path d="M 0,100 Q 300,100 500,400 T 900,100" stroke="#fcd34d" strokeWidth="8" fill="none" />
-                  </svg>
-                </div>
+          {/* Header Step Progress Pills */}
+          <div className="hidden md:flex items-center gap-2">
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#1e3932] text-white shadow-xs">
+              1. Location
+            </span>
+            <span className="text-gray-300">›</span>
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-400">
+              2. Details
+            </span>
+            <span className="text-gray-300">›</span>
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-400">
+              3. Order Menu
+            </span>
+          </div>
+        </div>
+      </header>
 
-                {/* Map Branch Pin Markers */}
-                <div className="absolute inset-0 z-10 pointer-events-none">
-                  <div
-                    className="absolute top-[25%] left-[48%] -translate-x-1/2 pointer-events-auto cursor-pointer"
-                    onClick={() => handleSelectBranch(mockBranches[0], "branch-detail")}
-                  >
-                    <div className="h-9 w-9 rounded-full bg-red-600 text-white font-extrabold text-sm flex items-center justify-center shadow-lg border-2 border-white hover:scale-110 transition-transform">
-                      C
-                    </div>
-                  </div>
+      {/* Main Store Locator Body */}
+      <main className="flex-1 max-w-7xl mx-auto w-full p-4 sm:px-6 lg:px-8 pb-16">
+        {/* Top Banner / Store Locator Intro */}
+        <div className="mb-4 bg-gradient-to-r from-[#1e3932] via-[#2d5349] to-[#142722] text-white rounded-3xl p-5 sm:p-6 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="space-y-1 text-center md:text-left">
+            <span className="bg-white/20 text-emerald-100 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+              📍 Store Locator
+            </span>
+            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight pt-1">
+              Find your nearest Espresso House
+            </h2>
+            <p className="text-xs sm:text-sm text-emerald-100/90 max-w-xl">
+              Pre-order ahead, skip the line, and enjoy your fresh Fika right when you step inside.
+            </p>
+          </div>
 
-                  <div
-                    className="absolute top-[35%] left-[28%] -translate-x-1/2 pointer-events-auto cursor-pointer"
-                    onClick={() => handleSelectBranch(mockBranches[1], "branch-detail")}
-                  >
-                    <div className="h-9 w-9 rounded-full bg-lime-600 text-white font-extrabold text-sm flex items-center justify-center shadow-lg border-2 border-white hover:scale-110 transition-transform">
-                      G
-                    </div>
-                  </div>
+          <button
+            onClick={handleGetLocation}
+            disabled={isLocating}
+            className="bg-white hover:bg-emerald-50 text-[#1e3932] px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center gap-2 shrink-0 active:scale-95"
+          >
+            <CompassOutlined className={isLocating ? "animate-spin text-base" : "text-base"} />
+            <span>{isLocating ? "Locating..." : "Use My Current Location"}</span>
+          </button>
+        </div>
 
-                  <div
-                    className="absolute top-[50%] left-[22%] -translate-x-1/2 pointer-events-auto cursor-pointer"
-                    onClick={() => handleSelectBranch(mockBranches[2], "branch-detail")}
-                  >
-                    <div className="h-9 w-9 rounded-full bg-blue-600 text-white font-extrabold text-sm flex items-center justify-center shadow-lg border-2 border-white hover:scale-110 transition-transform">
-                      S
-                    </div>
-                  </div>
-                </div>
+        {/* Desktop & Mobile Split Container */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Column: Branch Search & Scrollable Cards (5 cols desktop) */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="bg-white p-4 rounded-3xl border border-gray-200/90 shadow-xs space-y-3">
+              {/* Search Bar Input */}
+              <Input
+                prefix={<SearchOutlined className="text-gray-400 mr-1 text-base" />}
+                placeholder="Search city, street or coffee shop name..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                allowClear
+                className="rounded-2xl py-2.5 px-4 bg-gray-100/80 border-gray-200 text-sm focus:bg-white"
+              />
 
-                {/* Location Compass Target Button */}
+              {/* Tab Switcher Pills */}
+              <div className="bg-gray-100 p-1 rounded-2xl flex items-center">
                 <button
-                  onClick={handleGetLocation}
-                  disabled={isLocating}
-                  className="absolute bottom-6 border-2 border-white top-auto right-5 z-20 h-12 w-12 rounded-full bg-[#1e3932] text-white flex items-center justify-center text-xl shadow-xl hover:bg-[#2d5349] transition-all cursor-pointer active:scale-95"
+                  onClick={() => setBranchTab("nearby")}
+                  className={`flex-1 py-2 rounded-xl font-extrabold text-xs transition-all cursor-pointer ${
+                    branchTab === "nearby"
+                      ? "bg-white text-[#1e3932] shadow-xs"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
                 >
-                  <CompassOutlined className={isLocating ? "animate-spin" : ""} />
+                  Nearby ({mockBranches.length})
+                </button>
+                <button
+                  onClick={() => setBranchTab("favorites")}
+                  className={`flex-1 py-2 rounded-xl font-extrabold text-xs transition-all cursor-pointer flex items-center justify-center gap-1 ${
+                    branchTab === "favorites"
+                      ? "bg-white text-[#1e3932] shadow-xs"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  <HeartFilled className={favoriteBranches.length > 0 ? "text-red-500" : ""} />
+                  <span>Favorites ({favoriteBranches.length})</span>
                 </button>
               </div>
+            </div>
 
-              {/* Bottom Sheet Location Drawer */}
-              <div className="bg-white rounded-t-3xl shadow-2xl p-5 flex flex-col border-t border-gray-200 max-h-[50%] z-20">
-                <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-3 shrink-0" />
-
-                {/* Tab Switcher: Nearby vs Latest */}
-                <div className="bg-gray-100 p-1 rounded-full flex items-center mb-3 shrink-0">
-                  <button
-                    onClick={() => setBranchTab("nearby")}
-                    className={`flex-1 py-2 rounded-full font-extrabold text-xs sm:text-sm transition-all cursor-pointer ${
-                      branchTab === "nearby"
-                        ? "bg-brand-sage text-[#1e3932] shadow-xs"
-                        : "text-gray-600 hover:text-gray-900"
-                    }`}
-                  >
-                    Nearby
-                  </button>
-                  <button
-                    onClick={() => setBranchTab("latest")}
-                    className={`flex-1 py-2 rounded-full font-extrabold text-xs sm:text-sm transition-all cursor-pointer ${
-                      branchTab === "latest"
-                        ? "bg-brand-sage text-[#1e3932] shadow-xs"
-                        : "text-gray-600 hover:text-gray-900"
-                    }`}
-                  >
-                    Latest
-                  </button>
+            {/* Branch Cards Scroll Area */}
+            <div className="space-y-3 max-h-[620px] overflow-y-auto pr-1">
+              {filteredBranches.length === 0 ? (
+                <div className="bg-white p-8 rounded-3xl border border-gray-200 text-center space-y-2">
+                  <EnvironmentOutlined className="text-3xl text-gray-300" />
+                  <h3 className="text-base font-bold text-gray-700">No coffee shops found</h3>
+                  <p className="text-xs text-gray-500">Try searching for Joensuu, Stockholm, or Kotka.</p>
                 </div>
+              ) : (
+                filteredBranches.map((b) => {
+                  const isSelected = selectedBranch.id === b.id;
+                  const isFav = favoriteBranches.includes(b.id);
 
-                {/* Branch Items Scroll List */}
-                <div className="overflow-y-auto space-y-3 flex-1 pr-1 pb-2">
-                  {filteredBranches.map((b) => (
+                  return (
                     <div
                       key={b.id}
-                      className="p-3.5 rounded-2xl border border-gray-100 hover:border-gray-200 hover:bg-gray-50/80 transition-all flex items-center justify-between"
+                      onClick={() => setSelectedBranch(b)}
+                      className={`p-4 rounded-3xl border transition-all cursor-pointer relative group ${
+                        isSelected
+                          ? "bg-white border-[#1e3932] ring-2 ring-[#1e3932]/20 shadow-md"
+                          : "bg-white border-gray-200/90 hover:border-gray-300 hover:shadow-xs"
+                      }`}
                     >
-                      <div className="space-y-1 pr-2">
-                        <h3 className="text-sm font-extrabold text-[#16302b]">
-                          {b.name}, {b.address.split(",")[1] || b.address}
-                        </h3>
-                        <p className="text-xs text-gray-500 font-medium">
-                          {b.distance} {b.hours}
-                        </p>
-                        <button
-                          onClick={() => handleSelectBranch(b, "branch-detail")}
-                          className="text-xs font-semibold text-gray-500 hover:text-[#1e3932] flex items-center gap-1 cursor-pointer pt-0.5"
-                        >
-                          <span>info</span>
-                          <InfoCircleOutlined className="text-xs" />
-                        </button>
-                      </div>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="space-y-1.5 flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                            <span className="text-[11px] font-extrabold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                              Open • Closes {b.closingTime}
+                            </span>
+                            <span className="text-[11px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                              {b.distance}
+                            </span>
+                          </div>
 
-                      <button
-                        onClick={() => handleSelectBranch(b, "branch-detail")}
-                        className="bg-[#1e3932] hover:bg-primary-hover text-white px-5 py-2 rounded-full font-bold text-xs shadow-xs transition-all cursor-pointer shrink-0"
+                          <h3 className="text-base font-extrabold text-[#16302b] group-hover:text-[#1e3932] transition-colors">
+                            {b.name}
+                          </h3>
+
+                          <p className="text-xs text-gray-600 font-medium line-clamp-1">
+                            {b.address}, {b.city}
+                          </p>
+
+                          {/* Ratings & Amenities snippet */}
+                          <div className="flex items-center gap-3 pt-1 text-xs text-gray-500">
+                            <span className="flex items-center gap-1 font-bold text-amber-600">
+                              <StarFilled className="text-amber-400 text-xs" />
+                              {b.rating} ({b.reviewsCount})
+                            </span>
+                            <span>•</span>
+                            <span className="text-emerald-700 font-medium">⚡ {b.amenities[0]}</span>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col items-end gap-2 shrink-0">
+                          <button
+                            onClick={(e) => toggleFavorite(b.id, e)}
+                            className="text-gray-400 hover:text-red-500 p-1 transition-colors"
+                            title="Favorite branch"
+                          >
+                            {isFav ? (
+                              <HeartFilled className="text-red-500 text-lg" />
+                            ) : (
+                              <HeartOutlined className="text-lg" />
+                            )}
+                          </button>
+
+                          <button
+                            onClick={() => handleNavigateToBranch(b, "detail")}
+                            className="bg-[#1e3932] hover:bg-primary-hover text-white px-4 py-2 rounded-full font-bold text-xs shadow-xs transition-all cursor-pointer mt-2 active:scale-95"
+                          >
+                            Select Store
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+
+          {/* Right Column: Styled Interactive Map Viewport (7 cols desktop) */}
+          <div className="lg:col-span-7">
+            <div className="relative rounded-3xl overflow-hidden shadow-lg border border-gray-200/90 h-[520px] lg:h-[680px] bg-[#d0e3ec] flex flex-col">
+              {/* Background Styled Map Pattern */}
+              <div
+                className="absolute inset-0 bg-cover bg-center opacity-90"
+                style={{
+                  backgroundImage: "radial-gradient(#a3c5d6 2px, transparent 2px)",
+                  backgroundSize: "28px 28px",
+                }}
+              >
+                <svg className="w-full h-full opacity-50" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M 0,220 Q 200,100 400,260 T 800,200 T 1200,340 L 1200,800 L 0,800 Z" fill="#9ec5d7" />
+                  <path d="M 100,0 Q 300,400 600,250 T 1100,600" stroke="#ffffff" strokeWidth="14" fill="none" />
+                  <path d="M 0,150 Q 400,150 700,500 T 1200,150" stroke="#fcd34d" strokeWidth="9" fill="none" />
+                </svg>
+              </div>
+
+              {/* Map Floating Header Overlay */}
+              <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-none">
+                <div className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-md border border-gray-200 text-xs font-bold text-[#1e3932] flex items-center gap-2 pointer-events-auto">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+                  <span>Interactive Map • {filteredBranches.length} Stores Available</span>
+                </div>
+
+                <div className="bg-[#1e3932] text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-md">
+                  Nordic Fika Network
+                </div>
+              </div>
+
+              {/* Map Pins */}
+              <div className="absolute inset-0 z-10">
+                {mockBranches.map((b, idx) => {
+                  const isSelected = selectedBranch.id === b.id;
+                  const topOffsets = ["30%", "45%", "60%", "35%", "50%"];
+                  const leftOffsets = ["50%", "30%", "25%", "70%", "65%"];
+
+                  return (
+                    <div
+                      key={b.id}
+                      style={{ top: topOffsets[idx % 5], left: leftOffsets[idx % 5] }}
+                      className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
+                      onClick={() => setSelectedBranch(b)}
+                    >
+                      {/* Pin Pulse Glow */}
+                      {isSelected && (
+                        <div className="absolute -inset-3 rounded-full bg-[#1e3932]/30 animate-ping" />
+                      )}
+
+                      <div
+                        className={`h-11 w-11 rounded-full font-black text-xs flex items-center justify-center shadow-xl border-2 transition-all duration-300 ${
+                          isSelected
+                            ? "bg-[#1e3932] text-white border-amber-300 scale-125 z-30"
+                            : "bg-red-600 text-white border-white hover:scale-110 z-20"
+                        }`}
                       >
-                        Select
-                      </button>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Search Bar Input */}
-                <div className="pt-2 shrink-0">
-                  <Input
-                    prefix={<SearchOutlined className="text-gray-400 mr-1" />}
-                    placeholder="Search for Coffee Shop"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="rounded-full py-2.5 px-4 bg-gray-100 border-none text-sm"
-                  />
-                </div>
-              </div>
-            </div>
-          </main>
-        </div>
-      )}
-
-      {/* ==============================================================================
-          SCREEN 2: Coffee Shop Branch Detail View (Exact Match to Screenshot 2)
-         ============================================================================== */}
-      {step === "branch-detail" && (
-        <div className="flex-1 flex flex-col justify-between">
-          {/* Header */}
-          <header className="sticky top-0 z-30 bg-white border-b border-gray-200/80 shadow-2xs">
-            <div className="mx-auto max-w-md md:max-w-7xl px-4 py-3 flex items-center justify-between">
-              <button
-                onClick={() => setStep("map-select")}
-                className="h-9 w-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-700 transition-colors cursor-pointer border border-gray-200/80"
-              >
-                <CloseOutlined className="text-sm" />
-              </button>
-
-              <h1 className="text-base sm:text-lg font-extrabold text-[#16302b]">
-                {selectedBranch.name}
-              </h1>
-
-              <div className="w-9" />
-            </div>
-          </header>
-
-          {/* Main Layout Container matching max-w-7xl */}
-          <main className="flex-1 max-w-md md:max-w-7xl mx-auto w-full p-4 sm:px-6 lg:px-8 pb-28">
-            <div className="bg-white rounded-3xl overflow-hidden border border-gray-200/90 shadow-xs">
-              {/* Header Map Graphic Preview */}
-              <div className="relative h-48 sm:h-64 w-full bg-[#d0e3ec] overflow-hidden flex items-center justify-center">
-                <div className="h-10 w-10 rounded-full bg-red-600 text-white font-black flex items-center justify-center text-base shadow-xl border-2 border-white animate-bounce">
-                  C
-                </div>
-              </div>
-
-              {/* Address & Hours Details Area */}
-              <div className="p-6 md:p-8 space-y-6 max-w-3xl">
-                {/* Branch Title & Full Address */}
-                <div className="space-y-2 border-b border-gray-200 pb-5">
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-[#16302b]">
-                    {selectedBranch.name}
-                  </h2>
-                  <div className="text-xs sm:text-sm text-gray-700 font-medium leading-relaxed">
-                    <p>{selectedBranch.address}</p>
-                    <p>{selectedBranch.city}</p>
-                    <p>{selectedBranch.country}</p>
-                  </div>
-
-                  <div className="pt-2">
-                    <a
-                      href="https://maps.apple.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-xs font-bold text-emerald-800 hover:underline flex items-center gap-1"
-                    >
-                      <span>Open in Apple Maps</span>
-                      <RightOutlined className="text-[10px]" />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Opening Hours Table */}
-                <div className="space-y-3 border-b border-gray-200 pb-5">
-                  <h3 className="text-sm sm:text-base font-extrabold text-[#16302b]">
-                    Opening Hours
-                  </h3>
-                  <div className="space-y-2 text-xs sm:text-sm text-gray-700 font-medium">
-                    <div className="flex justify-between max-w-md">
-                      <span>Monday - Friday</span>
-                      <span className="font-bold">{selectedBranch.hours}</span>
-                    </div>
-                    <div className="flex justify-between max-w-md">
-                      <span>Saturday</span>
-                      <span className="font-bold">10:00 - 18:00</span>
-                    </div>
-                    <div className="flex justify-between max-w-md">
-                      <span>Sunday</span>
-                      <span className="font-bold">11:00 - 17:00</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Information / Amenities */}
-                <div className="space-y-3">
-                  <h3 className="text-sm sm:text-base font-extrabold text-[#16302b]">
-                    Information
-                  </h3>
-                  <div className="space-y-2 text-xs sm:text-sm text-gray-700 font-medium">
-                    {selectedBranch.amenities.map((amenity, idx) => (
-                      <div key={idx} className="flex items-center gap-2">
-                        <CheckCircleOutlined className="text-emerald-700 text-xs" />
-                        <span>{amenity}</span>
+                        ☕
                       </div>
-                    ))}
+
+                      {/* Hover Popup Label */}
+                      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 bg-white text-gray-900 px-3 py-1.5 rounded-xl shadow-xl border border-gray-200 text-xs font-extrabold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-40">
+                        {b.name} ({b.distance})
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Selected Branch Map Card Drawer at Bottom Right */}
+              <div className="absolute bottom-4 left-4 right-4 z-20 bg-white/95 backdrop-blur-md p-4 rounded-3xl shadow-xl border border-gray-200/90 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <div className="relative h-14 w-14 rounded-2xl overflow-hidden shrink-0 border border-gray-200">
+                    <Image src={selectedBranch.imageSrc} alt={selectedBranch.name} fill className="object-cover" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-black bg-emerald-100 text-[#1e3932] px-2 py-0.5 rounded-full">
+                        SELECTED SHOP
+                      </span>
+                      <span className="text-xs text-gray-500 font-semibold">{selectedBranch.distance}</span>
+                    </div>
+                    <h4 className="text-sm font-extrabold text-[#16302b]">{selectedBranch.name}</h4>
+                    <p className="text-xs text-gray-500 line-clamp-1">{selectedBranch.address}</p>
                   </div>
                 </div>
-              </div>
-            </div>
-          </main>
 
-          {/* Bottom Fixed CTA Button Container aligned with max-w-7xl */}
-          <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md p-4 border-t border-gray-200 z-30">
-            <div className="max-w-md md:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                  <button
+                    onClick={() => handleNavigateToBranch(selectedBranch, "detail")}
+                    className="flex-1 sm:flex-initial bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer"
+                  >
+                    Store Info
+                  </button>
+                  <button
+                    onClick={() => handleNavigateToBranch(selectedBranch, "menu")}
+                    className="flex-1 sm:flex-initial bg-[#1e3932] hover:bg-primary-hover text-white px-5 py-2.5 rounded-full font-bold text-xs shadow-md transition-all cursor-pointer active:scale-95"
+                  >
+                    Order Here
+                  </button>
+                </div>
+              </div>
+
+              {/* Compass Floating Target Button */}
               <button
-                onClick={() => setStep("menu")}
-                className="w-full max-w-md md:max-w-xl mx-auto block bg-[#1e3932] hover:bg-primary-hover text-white py-4 rounded-full font-bold text-base transition-all shadow-md active:scale-98 cursor-pointer text-center"
+                onClick={handleGetLocation}
+                disabled={isLocating}
+                className="absolute top-16 right-4 z-20 h-11 w-11 rounded-full bg-[#1e3932] text-white flex items-center justify-center text-lg shadow-xl hover:bg-[#2d5349] transition-all cursor-pointer active:scale-95"
+                title="My Location"
               >
-                Order Here
+                <CompassOutlined className={isLocating ? "animate-spin" : ""} />
               </button>
             </div>
           </div>
         </div>
-      )}
-
-      {/* ==============================================================================
-          SCREEN 3: Product List Menu Page (Exact Match to Screenshot 3)
-         ============================================================================== */}
-      {step === "menu" && (
-        <div className="flex-1 flex flex-col justify-between">
-          {/* Sticky Header Bar matching Screenshot 3 */}
-          <header className="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-2xs">
-            <div className="mx-auto max-w-md md:max-w-7xl px-4 py-3 flex items-center justify-between">
-              <button
-                onClick={() => setStep("branch-detail")}
-                className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-gray-800 bg-gray-100 hover:bg-gray-200 px-3.5 py-1.5 rounded-full transition-all border border-gray-200/60 cursor-pointer"
-              >
-                <LeftOutlined className="text-xs" />
-                <span>Back</span>
-              </button>
-
-              <div className="text-center">
-                <h1 className="text-sm sm:text-base font-extrabold text-[#16302b] leading-tight">
-                  {selectedBranch.name}
-                </h1>
-                <p className="text-[11px] text-gray-500 font-medium">
-                  Open {selectedBranch.hours}
-                </p>
-              </div>
-
-              <div className="w-16" />
-            </div>
-
-            {/* Horizontal Scroll Category Navigation Tabs */}
-            <div className="mx-auto max-w-md md:max-w-7xl px-4 flex items-center gap-4 overflow-x-auto pt-3 border-t border-gray-100 mt-1 no-scrollbar">
-              <button className="text-gray-500 hover:text-gray-800 px-1 cursor-pointer">
-                <SearchOutlined className="text-base" />
-              </button>
-
-              {["Barista's Choice", "App deals", "Cold drinks", "Hot drinks", "Bakery"].map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`text-xs sm:text-sm font-extrabold pb-2 whitespace-nowrap transition-all cursor-pointer border-b-2 ${
-                    activeCategory === cat
-                      ? "text-[#1e3932] border-[#1e3932]"
-                      : "text-gray-500 border-transparent hover:text-gray-800"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </header>
-
-          {/* Menu Catalog Body Content aligned with max-w-7xl responsive grid */}
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-md md:max-w-7xl mx-auto w-full pb-28 space-y-8">
-            {/* Section 1: Barista's Choice */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-extrabold text-[#16302b]">
-                  Barista&apos;s Choice
-                </h2>
-                <RightOutlined className="text-xs text-gray-400" />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span className="bg-brand-sage text-[#1e3932] text-xs font-extrabold px-3.5 py-1 rounded-full">
-                  All
-                </span>
-                <span className="text-xs font-semibold text-gray-600 px-3 py-1">
-                  Seasonal Favourites
-                </span>
-              </div>
-
-              {/* Product Responsive Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {mockProducts
-                  .filter((p) => p.category === "Barista's Choice")
-                  .map((product) => (
-                    <div
-                      key={product.id}
-                      className="bg-white rounded-3xl overflow-hidden border border-gray-200/90 shadow-2xs hover:shadow-md transition-all p-3 flex flex-col justify-between group"
-                    >
-                      <div className="relative h-32 sm:h-36 w-full bg-[#fef9f5] rounded-2xl overflow-hidden flex items-center justify-center p-2 mb-3">
-                        <Image
-                          src={product.imageSrc}
-                          alt={product.name}
-                          fill
-                          sizes="(max-width: 768px) 200px, 300px"
-                          className="object-contain p-1 group-hover:scale-105 transition-transform"
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <h3 className="text-xs sm:text-sm font-extrabold text-[#16302b] line-clamp-2">
-                          {product.name}
-                        </h3>
-                        <div className="flex items-center justify-between pt-1">
-                          <span className="text-xs font-bold text-gray-700">
-                            {product.price} SEK
-                          </span>
-                          <button
-                            onClick={() => handleAddToCart(product.id)}
-                            className="bg-[#1e3932] hover:bg-primary-hover text-white h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-all shadow-xs cursor-pointer active:scale-95"
-                          >
-                            <PlusOutlined />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-
-            {/* Section 2: App Deals */}
-            <div className="space-y-4 pt-4 border-t border-gray-200/70">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-extrabold text-[#16302b]">
-                  App Deals
-                </h2>
-                <RightOutlined className="text-xs text-gray-400" />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span className="bg-brand-sage text-[#1e3932] text-xs font-extrabold px-3.5 py-1 rounded-full">
-                  All
-                </span>
-                <span className="text-xs font-semibold text-gray-600 px-3 py-1">
-                  Combos
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {mockProducts
-                  .filter((p) => p.category === "App deals")
-                  .map((product) => (
-                    <div
-                      key={product.id}
-                      className="bg-white rounded-3xl overflow-hidden border border-gray-200/90 shadow-2xs hover:shadow-md transition-all p-3 flex flex-col justify-between group"
-                    >
-                      <div className="relative h-32 sm:h-36 w-full bg-[#fef9f5] rounded-2xl overflow-hidden flex items-center justify-center p-2 mb-3">
-                        <Image
-                          src={product.imageSrc}
-                          alt={product.name}
-                          fill
-                          sizes="(max-width: 768px) 200px, 300px"
-                          className="object-contain p-1 group-hover:scale-105 transition-transform"
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <h3 className="text-xs sm:text-sm font-extrabold text-[#16302b] line-clamp-2">
-                          {product.name}
-                        </h3>
-                        <div className="flex items-center justify-between pt-1">
-                          <span className="text-xs font-bold text-gray-700">
-                            {product.price} SEK
-                          </span>
-                          <button
-                            onClick={() => handleAddToCart(product.id)}
-                            className="bg-[#1e3932] hover:bg-primary-hover text-white h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-all shadow-xs cursor-pointer active:scale-95"
-                          >
-                            <PlusOutlined />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-
-            {/* Section 3: Cold Drinks */}
-            <div className="space-y-4 pt-4 border-t border-gray-200/70">
-              <div className="flex items-center justify-between">
-                <h2 className="text-lg sm:text-xl font-extrabold text-[#16302b]">
-                  Cold Drinks
-                </h2>
-                <RightOutlined className="text-xs text-gray-400" />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span className="bg-brand-sage text-[#1e3932] text-xs font-extrabold px-3.5 py-1 rounded-full">
-                  All
-                </span>
-                <span className="text-xs font-semibold text-gray-600 px-3 py-1">
-                  Drink Of The Month
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {mockProducts
-                  .filter((p) => p.category === "Cold drinks")
-                  .map((product) => (
-                    <div
-                      key={product.id}
-                      className="bg-white rounded-3xl overflow-hidden border border-gray-200/90 shadow-2xs hover:shadow-md transition-all p-3 flex flex-col justify-between group"
-                    >
-                      <div className="relative h-32 sm:h-36 w-full bg-[#eaf4fb] rounded-2xl overflow-hidden flex items-center justify-center p-2 mb-3">
-                        <Image
-                          src={product.imageSrc}
-                          alt={product.name}
-                          fill
-                          sizes="(max-width: 768px) 200px, 300px"
-                          className="object-contain p-1 group-hover:scale-105 transition-transform"
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <h3 className="text-xs sm:text-sm font-extrabold text-[#16302b] line-clamp-2">
-                          {product.name}
-                        </h3>
-                        <div className="flex items-center justify-between pt-1">
-                          <span className="text-xs font-bold text-gray-700">
-                            {product.price} SEK
-                          </span>
-                          <button
-                            onClick={() => handleAddToCart(product.id)}
-                            className="bg-[#1e3932] hover:bg-primary-hover text-white h-7 w-7 rounded-full flex items-center justify-center text-xs font-bold transition-all shadow-xs cursor-pointer active:scale-95"
-                          >
-                            <PlusOutlined />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </main>
-
-          {/* Floating Cart Bar at Bottom when Items Added */}
-          {totalCartCount > 0 && (
-            <div className="fixed bottom-4 left-4 right-4 z-40 max-w-md md:max-w-7xl mx-auto px-4">
-              <div className="bg-[#1e3932] text-white p-4 rounded-3xl shadow-2xl flex items-center justify-between border border-emerald-700 max-w-xl mx-auto">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-2xl bg-white/20 flex items-center justify-center text-lg font-bold">
-                    <ShoppingOutlined />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-extrabold">
-                      {totalCartCount} {totalCartCount === 1 ? "Item" : "Items"}
-                    </h4>
-                    <p className="text-xs text-amber-300 font-bold">
-                      Total: {totalCartPrice} SEK
-                    </p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => message.success("🎉 Pre-order sent to barista! Ready for pickup in 10 mins.")}
-                  className="bg-white hover:bg-gray-100 text-[#1e3932] px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer active:scale-95 flex items-center gap-1.5"
-                >
-                  <span>Checkout</span>
-                  <RightOutlined className="text-xs" />
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+      </main>
     </div>
   );
 }

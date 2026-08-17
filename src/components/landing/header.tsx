@@ -29,6 +29,10 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
       router.push(ROUTES.PROFILE);
     } else if (info.key === "orders") {
       router.push(ROUTES.RECEIPTS);
+    } else if (info.key === "dashboard") {
+      router.push(ROUTES.DASHBOARD.HOME);
+    } else if (info.key === "login") {
+      router.push(ROUTES.LOGIN);
     } else if (info.key === "logout") {
       message.success("Signed out successfully");
       router.push(ROUTES.HOME);
@@ -38,7 +42,9 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
   const profileMenuItems: MenuProps["items"] = [
     { key: "profile", label: "My Profile & Account" },
     { key: "orders", label: "Order History" },
+    { key: "dashboard", label: "Admin & POS Dashboard" },
     { type: "divider" },
+    { key: "login", label: "Sign In / Register" },
     { key: "logout", label: "Sign Out", danger: true },
   ];
 

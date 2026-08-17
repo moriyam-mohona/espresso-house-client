@@ -16,6 +16,7 @@ export const ROUTES = {
   ORDERS: "/wallet/receipts",
   PROFILE: "/profile",
   ORDER: "/order",
+  LOGIN: "/login",
   // Authentication route placeholders
   AUTH: {
     LOGIN: "/login",
@@ -23,9 +24,15 @@ export const ROUTES = {
     FORGOT_PASSWORD: "/forgot-password",
     RESET_PASSWORD: "/reset-password",
   },
-  // Application Dashboard route placeholders
+  // Application Dashboard route definitions
   DASHBOARD: {
     HOME: "/dashboard",
+    ORDERS: "/dashboard/orders",
+    MENU: "/dashboard/menu",
+    BRANCHES: "/dashboard/branches",
+    OFFERS: "/dashboard/offers",
+    TRANSACTIONS: "/dashboard/transactions",
+    MEMBERS: "/dashboard/members",
     SETTINGS: "/dashboard/settings",
     PROFILE: "/dashboard/profile",
   },

@@ -18,8 +18,10 @@ import {
   CrownOutlined,
   UserOutlined,
   LeftOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { App, Dropdown, MenuProps, Select } from "antd";
+import { useAuth } from "@/components/providers";
 import { ROUTES } from "@/constants/routes";
 
 export default function DashboardLayout({
@@ -30,6 +32,7 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { message } = App.useApp();
+  const { logout } = useAuth();
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [activeRole, setActiveRole] = useState<"superAdmin" | "storeManager">("superAdmin");
@@ -91,9 +94,10 @@ export default function DashboardLayout({
       key: "logout",
       label: "Sign Out",
       danger: true,
+      icon: <LogoutOutlined />,
       onClick: () => {
         message.success("Signed out from Dashboard");
-        router.push(ROUTES.LOGIN);
+        logout();
       },
     },
   ];
@@ -256,6 +260,19 @@ export default function DashboardLayout({
                   </span>
                 </button>
               </Dropdown>
+
+              {/* Direct Logout Button */}
+              <button
+                onClick={() => {
+                  message.success("Signed out from Dashboard");
+                  logout();
+                }}
+                className="flex items-center gap-1 bg-red-50 hover:bg-red-100 text-red-700 hover:text-red-800 border border-red-200 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                title="Sign out of Dashboard"
+              >
+                <LogoutOutlined className="text-red-600" />
+                <span className="hidden sm:inline">Logout</span>
+              </button>
             </div>
           </header>
 

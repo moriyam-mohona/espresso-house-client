@@ -22,11 +22,13 @@ import {
   WarningOutlined,
 } from "@ant-design/icons";
 import { App, Input, Switch, Modal, Checkbox } from "antd";
+import { useAuth } from "@/components/providers";
 import { ROUTES } from "@/constants/routes";
 
 export default function ProfilePage() {
   const router = useRouter();
   const { message } = App.useApp();
+  const { logout } = useAuth();
 
   // Profile Form State
   const [fullName, setFullName] = useState<string>("Sofia Lindqvist");
@@ -58,7 +60,7 @@ export default function ProfilePage() {
 
   const handleSignOut = () => {
     message.success("Signed out successfully");
-    router.push(ROUTES.HOME);
+    logout();
   };
 
   const handleChangePasswordSubmit = (e: React.FormEvent) => {

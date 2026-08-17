@@ -9,6 +9,7 @@ import {
   ReloadOutlined,
 } from "@ant-design/icons";
 import { App, Select } from "antd";
+import { useAuth } from "@/components/providers";
 import { ROUTES } from "@/constants/routes";
 
 function getInitialCountryCode(): string {
@@ -30,6 +31,7 @@ function getInitialCountryCode(): string {
 export default function LoginPage() {
   const router = useRouter();
   const { message } = App.useApp();
+  const { login } = useAuth();
 
   // Step 1: "phone" | Step 2: "otp"
   const [step, setStep] = useState<"phone" | "otp">("phone");
@@ -109,6 +111,13 @@ export default function LoginPage() {
       message.error("Please enter the full 6-digit OTP code");
       return;
     }
+
+    login({
+      phone: `${countryCode} ${phoneNumber}`,
+      name: "Sofia Lindqvist",
+      role: "customer",
+      points: 142,
+    });
 
     message.success(`🎉 Verified! Welcome to Expresso House.`);
     router.push(ROUTES.HOME);

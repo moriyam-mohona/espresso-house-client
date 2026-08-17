@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { AntdProvider } from "@/components/providers";
+import { AntdProvider, AuthProvider } from "@/components/providers";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -45,7 +45,9 @@ export default function RootLayout({
         className="min-h-screen bg-[#f7f8f6] font-sans antialiased text-gray-900 pb-20 md:pb-0"
       >
         <AntdRegistry>
-          <AntdProvider>{children}</AntdProvider>
+          <AntdProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </AntdProvider>
         </AntdRegistry>
       </body>
     </html>

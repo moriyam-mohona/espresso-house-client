@@ -9,9 +9,11 @@ import {
   EnvironmentOutlined,
   WalletOutlined,
   ShoppingOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { App, Badge, Dropdown, MenuProps } from "antd";
+import { useAuth } from "@/components/providers";
 import { siteConfig } from "@/config/site";
 import { ROUTES } from "@/constants/routes";
 
@@ -23,6 +25,12 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
   const router = useRouter();
   const { message } = App.useApp();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    message.success("Logged out successfully");
+    logout();
+  };
 
   const handleProfileMenuClick: MenuProps["onClick"] = (info) => {
     if (info.key === "profile") {
@@ -34,8 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
     } else if (info.key === "login") {
       router.push(ROUTES.LOGIN);
     } else if (info.key === "logout") {
-      message.success("Signed out successfully");
-      router.push(ROUTES.HOME);
+      handleLogout();
     }
   };
 
@@ -44,8 +51,7 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
     { key: "orders", label: "Order History" },
     { key: "dashboard", label: "Admin & POS Dashboard" },
     { type: "divider" },
-    { key: "login", label: "Sign In / Register" },
-    { key: "logout", label: "Sign Out", danger: true },
+    { key: "logout", label: "Sign Out", danger: true, icon: <LogoutOutlined /> },
   ];
 
   return (
@@ -57,30 +63,40 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
             <Image src="/logo.png" alt="Espresso Club Logo" fill sizes="36px" className="object-cover" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-wide">Hi!</h1>
-            <p className="text-[11px] text-emerald-200/80 -mt-1">Gold Member • {userPoints} pts</p>
+            <h1 className="text-xl font-bold tracking-wide">Hi, {user?.name?.split(" ")[0] || "there"}!</h1>
+            <p className="text-[11px] text-emerald-200/80 -mt-1">Gold Member • {user?.points || userPoints} pts</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3.5">
           {/* My ID QR Code Button */}
           <Link
             href={ROUTES.MY_ID}
             className="flex flex-col items-center justify-center text-white! hover:text-emerald-200 transition-colors"
           >
-            <QrcodeOutlined className="text-2xl" />
+            <QrcodeOutlined className="text-xl" />
             <span className="text-[10px] font-medium tracking-tight mt-0.5">My ID</span>
           </Link>
 
           {/* Profile Icon with badge */}
           <Dropdown menu={{ items: profileMenuItems, onClick: handleProfileMenuClick }} placement="bottomRight" trigger={['click']}>
-            <button className="flex flex-col items-center justify-center text-white hover:text-emerald-200 transition-colors relative">
+            <button className="flex flex-col items-center justify-center text-white hover:text-emerald-200 transition-colors relative cursor-pointer">
               <Badge dot color="#52c41a">
                 <UserOutlined className="text-xl text-white" />
               </Badge>
               <span className="text-[10px] font-medium tracking-tight mt-0.5">Profile</span>
             </button>
           </Dropdown>
+
+          {/* Mobile Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="flex flex-col items-center justify-center text-red-300 hover:text-red-200 transition-colors cursor-pointer"
+            title="Sign out"
+          >
+            <LogoutOutlined className="text-xl" />
+            <span className="text-[10px] font-bold tracking-tight mt-0.5 text-red-200">Logout</span>
+          </button>
         </div>
       </div>
 
@@ -88,12 +104,12 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
       <div className="hidden md:block bg-[#1e3932] text-white border-b border-primary">
         <div className="mx-auto max-w-6xl px-6 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <div className="flex items-center gap-2.5">
+            <Link href={ROUTES.HOME} className="flex items-center gap-2.5">
               <div className="h-10 w-10 rounded-full overflow-hidden border border-[#d4a373] relative shrink-0 shadow-xs">
                 <Image src="/logo.png" alt="Espresso Club Logo" fill sizes="40px" className="object-cover" />
               </div>
               <span className="font-extrabold text-2xl tracking-tight text-white">{siteConfig.name}</span>
-            </div>
+            </Link>
 
             {/* Store selector shortcut */}
             <div className="flex items-center gap-2 bg-primary/80 px-3 py-1.5 rounded-full text-xs text-emerald-100 hover:bg-primary transition-colors cursor-pointer">
@@ -128,18 +144,28 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
             <div className="flex items-center gap-3">
               <Link
                 href={ROUTES.MY_ID}
-                className="flex items-center gap-2 bg-brand-sage!  text-[#1e3932] px-3.5 py-1.5 rounded-full text-xs font-bold hover:bg-white transition-all shadow-xs"
+                className="flex items-center gap-2 bg-brand-sage! text-[#1e3932] px-3.5 py-1.5 rounded-full text-xs font-bold hover:bg-white transition-all shadow-xs"
               >
                 <QrcodeOutlined className="text-base" />
                 <span>My ID (QR)</span>
               </Link>
 
               <Dropdown menu={{ items: profileMenuItems, onClick: handleProfileMenuClick }} placement="bottomRight" trigger={['click']}>
-         <button className="flex items-center gap-2 bg-primary-hover hover:bg-[#39695d] px-3.5 py-1.5 rounded-full text-xs font-medium text-white transition-all">
+                <button className="flex items-center gap-2 bg-primary-hover hover:bg-[#39695d] px-3.5 py-1.5 rounded-full text-xs font-medium text-white transition-all cursor-pointer">
                   <UserOutlined className="text-emerald-300" />
                   <span>My Profile</span>
                 </button>
               </Dropdown>
+
+              {/* Desktop Direct Logout Button */}
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 bg-red-950/40 hover:bg-red-900/60 text-red-200 hover:text-white border border-red-700/50 hover:border-red-500 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer active:scale-95 shadow-xs"
+                title="Sign out of your account"
+              >
+                <LogoutOutlined className="text-red-300" />
+                <span>Logout</span>
+              </button>
             </div>
           </div>
         </div>
@@ -147,4 +173,3 @@ export const Header: React.FC<HeaderProps> = ({ userPoints = 142 }) => {
     </header>
   );
 };
-

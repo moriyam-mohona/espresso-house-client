@@ -130,17 +130,25 @@ flowchart TD
 espresso-house-client/
 ├── public/                     # Static assets (logos, drink images, icons)
 ├── src/
-│   ├── app/                    # Next.js App Router route hierarchy
-│   │   ├── challenges/         # Fika challenges & scratch games
-│   │   ├── my-id/              # Member QR Code & Wallet page
-│   │   ├── order/              # Interactive store map & ordering steps
-│   │   │   └── [branchId]/     # Store details, menu catalog & checkout
-│   │   ├── orders/             # Redirect alias to /wallet/receipts
-│   │   ├── profile/            # User profile, password & account deletion
-│   │   ├── rewards/            # Fika points & rewards history
-│   │   ├── wallet/             # Digital wallet, top-up, cards, offers & receipts
+│   ├── app/                    # Next.js App Router route groups hierarchy
+│   │   ├── (auth)/             # 🔐 Authentication Flow
+│   │   │   └── login/          # Phone + 6-Digit OTP login page
+│   │   ├── (dashboard)/        # 🎛️ Admin & Store Manager Portal
+│   │   │   └── dashboard/      # Executive KPIs, KDS orders board, menu, branches, offers, etc.
+│   │   ├── (main)/             # ☕ Client & Member Store Experience
+│   │   │   ├── page.tsx        # Main landing page
+│   │   │   ├── challenges/     # Fika challenges & scratch games
+│   │   │   ├── my-id/          # Member QR Code & Wallet page
+│   │   │   ├── order/          # Interactive store map & ordering steps
+│   │   │   │   └── [branchId]/ # Store details, menu catalog & checkout
+│   │   │   ├── orders/         # Redirect alias to /wallet/receipts
+│   │   │   ├── profile/        # User profile, password & account deletion
+│   │   │   ├── rewards/        # Fika points & rewards history
+│   │   │   └── wallet/         # Digital wallet, top-up, cards, offers & receipts
 │   │   ├── layout.tsx          # Root layout with AntdRegistry & Providers
-│   │   └── page.tsx            # Main landing page
+│   │   ├── error.tsx           # Global error boundary
+│   │   ├── loading.tsx         # Global loading UI
+│   │   └── not-found.tsx       # 404 page
 │   ├── components/             # Reusable UI component architecture
 │   │   ├── common/             # Modals (Offer detail), Loading spinners, Empty states
 │   │   ├── landing/            # Header, BottomNav, HeroCarousel, ExpressoOffers, ExpressoFun
